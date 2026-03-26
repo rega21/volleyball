@@ -116,8 +116,30 @@
     </div>
   </div>
 
+  <!-- Modal rating -->
+  <div class="modal" id="ratingModal">
+    <div class="modal__content modal__content--rating">
+      <button class="modal__close" id="ratingClose">✕</button>
+      <h2 id="ratingPlayerName"></h2>
+
+      <div class="radar-container">
+        <canvas id="radarChart"></canvas>
+      </div>
+
+      <div id="ratingSliders"></div>
+
+      <div id="ratingAlreadyVoted" style="display:none">
+        <p class="voted-msg">Ya votaste a este jugador ✓</p>
+      </div>
+
+      <button class="btn btn--primary" id="ratingSubmit">Enviar voto</button>
+    </div>
+  </div>
+
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 
   <!-- Cliente Supabase -->
   <script src="src/api/client.js"></script>
@@ -131,6 +153,7 @@
   <script src="src/views/playersView.js"></script>
 
   <!-- Controladores -->
+  <script src="src/controllers/ratingsController.js"></script>
   <script src="src/controllers/playersController.js"></script>
   <script src="src/controllers/tabController.js"></script>
   <script src="src/controllers/menuController.js"></script>

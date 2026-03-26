@@ -1,6 +1,7 @@
 const PlayersController = (() => {
   let allPlayers = [];
   let positions = [];
+  let ratingsMap = {};
   let editingId = null;
 
   // ── Búsqueda ──────────────────────────────────────────
@@ -87,7 +88,8 @@ const PlayersController = (() => {
           await PlayersService.create({ name, nickname, positionIds });
         }
         allPlayers = await PlayersService.getAll();
-        PlayersView.render(allPlayers);
+        ratingsMap = await RatingsService.getAllAverages();
+        PlayersView.render(allPlayers, ratingsMap);
         closeModal();
       } catch (err) {
         console.error('Error guardando jugador:', err);
@@ -95,14 +97,20 @@ const PlayersController = (() => {
     });
   };
 
+  const refreshRatings = async () => {
+    ratingsMap = await RatingsService.getAllAverages();
+    PlayersView.render(allPlayers, ratingsMap);
+  };
+
   // ── Init ──────────────────────────────────────────────
   const init = async () => {
     try {
-      [allPlayers, positions] = await Promise.all([
+      [allPlayers, positions, ratingsMap] = await Promise.all([
         PlayersService.getAll(),
         PlayersService.getPositions(),
+        RatingsService.getAllAverages(),
       ]);
-      PlayersView.render(allPlayers);
+      PlayersView.render(allPlayers, ratingsMap);
       renderPositionCheckboxes();
     } catch (err) {
       console.error('Error cargando jugadores:', err);
@@ -111,6 +119,16 @@ const PlayersController = (() => {
 
     initSearch();
     initModal();
+
+    // Delegación para btn VOTAR
+    document.getElementById('playerList').addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-vote');
+      if (!btn) return;
+      const player = allPlayers.find(p => p.id === btn.dataset.id);
+      if (player) RatingsController.open(player);
+    });
+
+    RatingsController.init(refreshRatings);
   };
 
   return { init };

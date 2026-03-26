@@ -395,3 +395,110 @@ body {
   color: #fff;
   font-weight: 600;
 }
+
+/* ── Player card meta ───────────────────────────────── */
+.player-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.player-card__nickname {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+
+.rating-badge {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.rating-badge--active {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.player-card__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-vote {
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-vote:hover { opacity: 0.85; }
+
+/* ── Modal rating ────────────────────────────────────── */
+.modal__content--rating {
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+
+.radar-container {
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto 16px;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.slider-label {
+  width: 80px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #aaa;
+  cursor: pointer;
+}
+
+.slider-value {
+  width: 20px;
+  text-align: right;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.voted-msg {
+  text-align: center;
+  color: #10b981;
+  font-weight: 600;
+  padding: 12px 0;
+}

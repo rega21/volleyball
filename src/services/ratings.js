@@ -54,5 +54,34 @@ const RatingsService = (() => {
     if (error) throw error;
   };
 
-  return { getAverages, hasVoted, vote, STATS };
+  // Promedios de todos los jugadores en una sola query
+  const getAllAverages = async () => {
+    const { data, error } = await db
+      .from('ratings')
+      .select('player_id, remate, defensa, saque, recepcion, movilidad, tecnica');
+    if (error) throw error;
+
+    const grouped = {};
+    data.forEach(r => {
+      if (!grouped[r.player_id]) grouped[r.player_id] = [];
+      grouped[r.player_id].push(r);
+    });
+
+    const result = {};
+    Object.entries(grouped).forEach(([playerId, votes]) => {
+      if (votes.length < MIN_VOTES) {
+        result[playerId] = { voteCount: votes.length, avg: null };
+        return;
+      }
+      const avg = {};
+      STATS.forEach(stat => {
+        avg[stat] = +(votes.reduce((sum, r) => sum + r[stat], 0) / votes.length).toFixed(1);
+      });
+      result[playerId] = { voteCount: votes.length, avg };
+    });
+
+    return result;
+  };
+
+  return { getAverages, getAllAverages, hasVoted, vote, STATS, MIN_VOTES };
 })();

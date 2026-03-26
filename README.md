@@ -32,7 +32,7 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 
 **Vistas y controladores**
 - [x] `src/views/playersView.js` — render lista + cards
-- [x] `src/controllers/playersController.js` — carga, búsqueda toggle, modal agregar jugador
+- [x] `src/controllers/playersController.js` — carga, búsqueda toggle, modal agregar/editar jugador
 - [x] `src/controllers/themeController.js` — dark/light con persistencia
 - [x] `src/controllers/menuController.js` — hamburger + modal feedback
 - [x] `src/controllers/tabController.js` — navegación entre tabs
@@ -50,7 +50,7 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 
 ### Supabase
 - [ ] View `player_avg_ratings` — promedio de stats con mínimo 4 votos
-- [ ] RLS (Row Level Security) — configurar cuando se agregue auth o se necesite
+- [ ] RLS (Row Level Security) — todas las tablas están en UNRESTRICTED (acceso público total). Revisar si se agrega autenticación en el futuro
 
 ### Partido
 - [ ] Tab Partido: selección de jugadores disponibles
