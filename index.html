@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voley</title>
+  <link rel="stylesheet" href="src/styles/main.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Voley CLT" />
+  <link rel="apple-touch-icon" href="src/assets/Lawn.png" />
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <h1 class="topbar__title">
+      Voley CLT 
+      <img src="src/assets/Lawn.png" alt="CLT" class="topbar__logo" />
+    </h1>
+    <div class="topbar__actions">
+      <button class="theme-toggle" id="themeBtn" aria-label="Cambiar tema">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"></path></svg>
+      </button>
+      <button class="hamburger" id="menuBtn" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Menú lateral -->
+  <nav class="sidemenu" id="sideMenu">
+    <button class="sidemenu__close" id="menuClose">✕</button>
+    <ul>
+      <li><a href="#" id="feedbackLink">Sugerencias</a></li>
+    </ul>
+  </nav>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+
+    <!-- Tab: Jugadores -->
+    <section class="tab-panel active" id="panel-jugadores">
+      <div class="panel-actions">
+        <button class="btn-action btn-action--search" id="searchBtn">🔍 Buscar</button>
+        <button class="btn-action btn-action--add" id="addPlayerBtn">＋ Agregar</button>
+      </div>
+      <div class="search-bar" id="searchBar" style="display:none">
+        <input type="search" id="searchInput" placeholder="Buscar jugador..." />
+      </div>
+      <div class="player-list" id="playerList">
+        <!-- renderizado por JS -->
+      </div>
+    </section>
+
+    <!-- Tab: Partido -->
+    <section class="tab-panel" id="panel-partido">
+      <!-- renderizado por JS -->
+    </section>
+
+    <!-- Tab: Historial -->
+    <section class="tab-panel" id="panel-historial">
+      <!-- renderizado por JS -->
+    </section>
+
+  </main>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <button class="bottom-nav__item active" data-tab="jugadores">
+      <span class="bottom-nav__icon">👥</span>
+      <span>Jugadores</span>
+    </button>
+    <button class="bottom-nav__item" data-tab="partido">
+      <span class="bottom-nav__icon">🏐</span>
+      <span>Partido</span>
+    </button>
+    <button class="bottom-nav__item" data-tab="historial">
+      <span class="bottom-nav__icon">📋</span>
+      <span>Historial</span>
+    </button>
+  </nav>
+
+  <!-- Modal agregar jugador -->
+  <div class="modal" id="addPlayerModal">
+    <div class="modal__content">
+      <button class="modal__close" id="addPlayerClose">✕</button>
+      <h2>Agregar jugador</h2>
+      <div class="form-group">
+        <label>Nombre *</label>
+        <input type="text" id="playerName" placeholder="Nombre" />
+      </div>
+      <div class="form-group">
+        <label>Apodo</label>
+        <input type="text" id="playerNickname" placeholder="Apodo (opcional)" />
+      </div>
+      <div class="form-group">
+        <label>Posiciones</label>
+        <div class="position-checkboxes" id="positionCheckboxes">
+          <!-- renderizado por JS -->
+        </div>
+      </div>
+      <button class="btn btn--primary" id="savePlayerBtn">Guardar</button>
+    </div>
+  </div>
+
+  <!-- Modal feedback -->
+  <div class="modal" id="feedbackModal">
+    <div class="modal__content">
+      <button class="modal__close" id="feedbackClose">✕</button>
+      <h2>Sugerencias</h2>
+      <textarea id="feedbackText" placeholder="Tu sugerencia..."></textarea>
+      <button class="btn btn--primary" id="feedbackSubmit">Enviar</button>
+    </div>
+  </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Cliente Supabase -->
+  <script src="src/api/client.js"></script>
+
+  <!-- Servicios -->
+  <script src="src/services/players.js"></script>
+  <script src="src/services/ratings.js"></script>
+  <script src="src/services/feedback.js"></script>
+
+  <!-- Vistas -->
+  <script src="src/views/playersView.js"></script>
+
+  <!-- Controladores -->
+  <script src="src/controllers/playersController.js"></script>
+  <script src="src/controllers/tabController.js"></script>
+  <script src="src/controllers/menuController.js"></script>
+  <script src="src/controllers/themeController.js"></script>
+
+  <!-- App principal -->
+  <script src="app.js"></script>
+</body>
+</html>
