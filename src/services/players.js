@@ -46,11 +46,27 @@ const PlayersService = (() => {
     return player;
   };
 
+  const update = async (id, { name, nickname, positionIds }) => {
+    const { error } = await db
+      .from('players')
+      .update({ name, nickname: nickname || null })
+      .eq('id', id);
+    if (error) throw error;
+
+    // Reemplaza posiciones
+    await db.from('player_positions').delete().eq('player_id', id);
+    if (positionIds?.length) {
+      const rows = positionIds.map(position_id => ({ player_id: id, position_id }));
+      const { error: posError } = await db.from('player_positions').insert(rows);
+      if (posError) throw posError;
+    }
+  };
+
   const getPositions = async () => {
     const { data, error } = await db.from('positions').select('id, name, slug').order('id');
     if (error) throw error;
     return data;
   };
 
-  return { getAll, getById, create, getPositions };
+  return { getAll, getById, create, update, getPositions };
 })();

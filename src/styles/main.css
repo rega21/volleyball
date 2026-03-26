@@ -197,12 +197,29 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 14px 16px;
   cursor: pointer;
   transition: border-color 0.15s;
 }
 
 .player-card:hover { border-color: var(--accent); }
+
+.player-card__info { flex: 1; }
+
+.btn-edit {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 8px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.btn-edit:hover { color: var(--accent); }
 
 .player-card__name {
   font-weight: 600;
