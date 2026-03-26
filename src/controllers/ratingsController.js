@@ -5,7 +5,7 @@ const RatingsController = (() => {
     remate:    'Remate',
     defensa:   'Defensa',
     saque:     'Saque',
-    recepcion: 'Recepción',
+    recepcion: 'Armado',
     movilidad: 'Movilidad',
     tecnica:   'Técnica',
   };
@@ -88,14 +88,17 @@ const RatingsController = (() => {
   };
 
   // ── Render sliders ────────────────────────────────────
-  const renderSliders = () => {
-    document.getElementById('ratingSliders').innerHTML = STATS.map(s => `
-      <div class="slider-row">
-        <span class="slider-label">${STAT_LABELS[s]}</span>
-        <input type="range" id="slider-${s}" min="0" max="10" value="5" class="slider" />
-        <span class="slider-value" id="val-${s}">5</span>
-      </div>
-    `).join('');
+  const renderSliders = (existingVote = null) => {
+    document.getElementById('ratingSliders').innerHTML = STATS.map(s => {
+      const val = existingVote ? existingVote[s] : 0;
+      return `
+        <div class="slider-row">
+          <span class="slider-label">${STAT_LABELS[s]}</span>
+          <input type="range" id="slider-${s}" min="0" max="10" value="${val}" class="slider" />
+          <span class="slider-value" id="val-${s}">${val}</span>
+        </div>
+      `;
+    }).join('');
 
     STATS.forEach(s => {
       document.getElementById(`slider-${s}`).addEventListener('input', () => {
@@ -108,25 +111,19 @@ const RatingsController = (() => {
   };
 
   // ── Abrir modal ───────────────────────────────────────
-  const open = async (player) => {
+  const open = (player, existingVote = null) => {
     currentPlayerId = player.id;
     document.getElementById('ratingPlayerName').textContent = player.name;
     document.getElementById('ratingAlreadyVoted').style.display = 'none';
     document.getElementById('ratingSubmit').style.display = 'block';
     document.getElementById('ratingSliders').style.display = 'block';
+    document.getElementById('ratingSubmit').textContent = existingVote ? 'Actualizar voto' : 'Enviar voto';
 
     document.getElementById('ratingModal').classList.add('open');
 
-    // Destruir instancia previa del radar para recrear limpio
     if (radarInstance) { radarInstance.destroy(); radarInstance = null; }
 
-    renderSliders();
-
-    const voted = await RatingsService.hasVoted(player.id);
-    if (voted) {
-      document.getElementById('ratingAlreadyVoted').style.display = 'block';
-      document.getElementById('ratingSubmit').style.display = 'none';
-    }
+    renderSliders(existingVote);
   };
 
   const close = () => {

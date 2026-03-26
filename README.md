@@ -31,8 +31,9 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] `src/services/feedback.js` — send
 
 **Vistas y controladores**
-- [x] `src/views/playersView.js` — render lista + cards
+- [x] `src/views/playersView.js` — render lista + cards con rating y botón dinámico (VOTAR/EDITAR)
 - [x] `src/controllers/playersController.js` — carga, búsqueda toggle, modal agregar/editar jugador
+- [x] `src/controllers/ratingsController.js` — modal de rating con sliders + radar chart (Chart.js), upsert de votos, pre-carga voto existente
 - [x] `src/controllers/themeController.js` — dark/light con persistencia
 - [x] `src/controllers/menuController.js` — hamburger + modal feedback
 - [x] `src/controllers/tabController.js` — navegación entre tabs
@@ -42,15 +43,16 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 ## Pendiente
 
 ### Jugadores
-- [ ] Modal detalle de jugador (al hacer click en la card)
-- [ ] Sistema de ratings con sliders (6 atributos: Remate, Defensa, Saque, Recepción, Movilidad, Técnica)
-- [ ] Radar chart con Chart.js (se muestra con mínimo 4 votos)
-- [ ] Mostrar rating promedio en la card (estrella + número, "xx" si < 4 votos)
-- [ ] Botón VOTAR en cada card
+- [x] Sistema de ratings con sliders (6 atributos: Remate, Defensa, Saque, Armado, Movilidad, Técnica)
+- [x] Radar chart con Chart.js reactivo en tiempo real
+- [x] Rating promedio en la card (⭐ número, "xx" si < 4 votos)
+- [x] Botón dinámico: 🗳️ VOTAR (sin voto) / ✏️ EDITAR (ya votó, pre-carga valores)
+- [ ] Modal detalle de jugador (ver stats completos)
 
 ### Supabase
 - [ ] View `player_avg_ratings` — promedio de stats con mínimo 4 votos
 - [ ] RLS (Row Level Security) — todas las tablas están en UNRESTRICTED (acceso público total). Revisar si se agrega autenticación en el futuro
+- [ ] Renombrar columna `recepcion` → `armado` en tabla `ratings` (por ahora se muestra como "Armado" en la UI pero la columna DB mantiene el nombre original)
 
 ### Partido
 - [ ] Tab Partido: selección de jugadores disponibles

@@ -31,26 +31,33 @@ const RatingsService = (() => {
     return avg;
   };
 
-  // Verifica si el voter ya votó a este jugador
-  const hasVoted = async (playerId) => {
+  // Trae todos los player_ids que ya votó este voter
+  const getMyVotedIds = async () => {
     const voterId = getVoterId();
-    const { data } = await db
+    const { data, error } = await db
       .from('ratings')
-      .select('id')
-      .eq('player_id', playerId)
-      .eq('voter_id', voterId)
-      .maybeSingle();
-    return !!data;
+      .select('player_id, remate, defensa, saque, recepcion, movilidad, tecnica')
+      .eq('voter_id', voterId);
+    if (error) throw error;
+    const map = {};
+    data.forEach(r => { map[r.player_id] = r; });
+    return map;
   };
 
-  // Envía un voto
+  // Verifica si el voter ya votó a este jugador
+  const hasVoted = async (playerId) => {
+    const voted = await getMyVotedIds();
+    return !!voted[playerId];
+  };
+
+  // Envía o actualiza un voto (upsert)
   const vote = async (playerId, stats) => {
     const voterId = getVoterId();
-    const { error } = await db.from('ratings').insert({
+    const { error } = await db.from('ratings').upsert({
       player_id: playerId,
       voter_id: voterId,
       ...stats
-    });
+    }, { onConflict: 'player_id,voter_id' });
     if (error) throw error;
   };
 
@@ -83,5 +90,5 @@ const RatingsService = (() => {
     return result;
   };
 
-  return { getAverages, getAllAverages, hasVoted, vote, STATS, MIN_VOTES };
+  return { getAverages, getAllAverages, getMyVotedIds, hasVoted, vote, STATS, MIN_VOTES };
 })();

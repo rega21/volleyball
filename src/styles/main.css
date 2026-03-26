@@ -423,25 +423,37 @@ body {
 
 .player-card__actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   flex-shrink: 0;
 }
 
-.btn-vote {
-  background: #10b981;
-  color: #fff;
+.btn-card {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   border: none;
-  border-radius: 14px;
-  padding: 5px 12px;
-  font-size: 0.75rem;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
+  transition: opacity 0.15s;
 }
 
-.btn-vote:hover { opacity: 0.85; }
+.btn-card:hover { opacity: 0.85; }
+
+.btn-card--vote {
+  background: #1e3a5f;
+  color: #93c5fd;
+}
+
+.btn-card--edit {
+  background: #1e3a2f;
+  color: #6ee7b7;
+}
 
 /* ── Modal rating ────────────────────────────────────── */
 .modal__content--rating {
