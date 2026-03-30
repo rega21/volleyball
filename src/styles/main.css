@@ -4,7 +4,7 @@
   --surface: #ffffff;
   --text: #1a1a1a;
   --text-muted: #666666;
-  --accent: #e63946;
+  --accent: #10b981;
   --border: #e0e0e0;
   --nav-h: 60px;
   --topbar-h: 56px;
@@ -15,7 +15,7 @@
   --surface: #1f2937;
   --text: #f9fafb;
   --text-muted: #9ca3af;
-  --accent: #e63946;
+  --accent: #10b981;
   --border: #374151;
 }
 
@@ -27,12 +27,17 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 /* ── Topbar ─────────────────────────────────────────── */
 .topbar {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
   height: var(--topbar-h);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -168,7 +173,14 @@ body {
 
 .btn-action:hover { opacity: 0.85; }
 
-.btn-action--add { background: #6366f1; }
+.btn-action svg {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  stroke: #fff;
+}
+
+.btn-action--add { background: #10b981; }
 
 /* ── Search ─────────────────────────────────────────── */
 .search-bar { margin-bottom: 16px; }
@@ -250,7 +262,10 @@ body {
 /* ── Bottom nav ─────────────────────────────────────── */
 .bottom-nav {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
   height: var(--nav-h);
   background: var(--surface);
   border-top: 1px solid var(--border);
@@ -380,6 +395,100 @@ body {
   color: var(--accent);
 }
 
+/* ── Partido ────────────────────────────────────────── */
+.partido-hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.player-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.player-chip {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.player-chip span {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.player-chip--active {
+  background: #10b981;
+  border-color: #10b981;
+  color: #fff;
+}
+
+.player-chip--active span { color: rgba(255,255,255,0.8); }
+
+.partido-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.selected-count {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.equipos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.equipo__title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid;
+}
+
+.equipo__title--a { border-color: #3b82f6; color: #3b82f6; }
+.equipo__title--b { border-color: #f97316; color: #f97316; }
+
+.equipo__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.equipo__player {
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.equipo__rating {
+  font-size: 0.78rem;
+  color: #f59e0b;
+}
+
 /* ── Botones ────────────────────────────────────────── */
 .btn {
   padding: 10px 20px;
@@ -394,6 +503,12 @@ body {
   background: var(--accent);
   color: #fff;
   font-weight: 600;
+}
+
+.btn--secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
 }
 
 /* ── Player card meta ───────────────────────────────── */
@@ -445,14 +560,32 @@ body {
 
 .btn-card:hover { opacity: 0.85; }
 
+.player-card__info {
+  cursor: pointer;
+}
+
 .btn-card--vote {
-  background: #1e3a5f;
-  color: #93c5fd;
+  background: #fff;
+  color: #1a1a1a;
+  border: 1px solid var(--border);
 }
 
 .btn-card--edit {
+  background: #fff;
+  color: #1a1a1a;
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .btn-card--vote {
+  background: #1e3a5f;
+  color: #93c5fd;
+  border: none;
+}
+
+[data-theme="dark"] .btn-card--edit {
   background: #1e3a2f;
   color: #6ee7b7;
+  border: none;
 }
 
 /* ── Modal rating ────────────────────────────────────── */

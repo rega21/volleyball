@@ -15,7 +15,13 @@ if ('serviceWorker' in navigator) {
   ThemeController.init();
   MenuController.init();
   TabController.init();
-  PlayersController.init();
+  PlayersController.init(PartidoController);
+  lucide.createIcons();
+
+  TabController.onActivate('partido', () => PartidoController.refresh(
+    PlayersController.getAllPlayers(),
+    PlayersController.getRatingsMap()
+  ));
 
   // Feedback submit
   document.getElementById('feedbackSubmit').addEventListener('click', async () => {

@@ -2,7 +2,7 @@ const RatingsController = (() => {
   const STATS = RatingsService.STATS;
 
   const STAT_LABELS = {
-    remate:    'Remate',
+    remate:    'Ataque',
     defensa:   'Defensa',
     saque:     'Saque',
     recepcion: 'Armado',

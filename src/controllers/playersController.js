@@ -53,7 +53,7 @@ const PlayersController = (() => {
     document.getElementById('positionCheckboxes').innerHTML = positions.map(p => `
       <label>
         <input type="checkbox" value="${p.id}" />
-        ${p.name}
+        ${p.name.replace(/\s*\(.*?\)/, '')}
       </label>
     `).join('');
   };
@@ -92,7 +92,10 @@ const PlayersController = (() => {
   };
 
   // ── Init ──────────────────────────────────────────────
-  const init = async () => {
+  let partidoCtrl = null;
+
+  const init = async (partidoController = null) => {
+    partidoCtrl = partidoController;
     try {
       [allPlayers, positions, ratingsMap, myVotedMap] = await Promise.all([
         PlayersService.getAll(),
@@ -102,6 +105,7 @@ const PlayersController = (() => {
       ]);
       PlayersView.render(allPlayers, ratingsMap, myVotedMap);
       renderPositionCheckboxes();
+      if (partidoCtrl) partidoCtrl.init(allPlayers, ratingsMap);
     } catch (err) {
       console.error('Error cargando jugadores:', err);
       PlayersView.renderEmpty('Error al cargar jugadores');
@@ -112,6 +116,12 @@ const PlayersController = (() => {
 
     // Delegación para VOTAR y EDITAR voto
     document.getElementById('playerList').addEventListener('click', (e) => {
+      const infoArea = e.target.closest('.player-card__info');
+      if (infoArea) {
+        const player = allPlayers.find(p => p.id === infoArea.dataset.editId);
+        if (player) openModal(player);
+        return;
+      }
       const btn = e.target.closest('.btn-card');
       if (!btn) return;
       const player = allPlayers.find(p => p.id === btn.dataset.id);
@@ -121,5 +131,5 @@ const PlayersController = (() => {
     RatingsController.init(refreshRatings);
   };
 
-  return { init };
+  return { init, getAllPlayers: () => allPlayers, getRatingsMap: () => ratingsMap };
 })();

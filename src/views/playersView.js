@@ -10,7 +10,7 @@ const PlayersView = (() => {
 
   const renderCard = (player, ratingData, myVote) => {
     const positions = player.player_positions
-      ?.map(p => `<span class="badge">${p.positions.name}</span>`)
+      ?.map(p => `<span class="badge">${p.positions.name.replace(/\s*\(.*?\)/, '')}</span>`)
       .join('') || '';
 
     const actionBtn = myVote
@@ -24,7 +24,7 @@ const PlayersView = (() => {
 
     return `
       <div class="player-card" data-id="${player.id}">
-        <div class="player-card__info">
+        <div class="player-card__info" data-edit-id="${player.id}">
           <div class="player-card__name">${player.name}
             ${player.nickname ? `<span class="player-card__nickname">"${player.nickname}"</span>` : ''}
           </div>

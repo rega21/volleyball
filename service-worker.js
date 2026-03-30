@@ -1,4 +1,4 @@
-const CACHE = 'voley-clt-v2';
+const CACHE = 'voley-clt-v3';
 const ASSETS = [
   '/',
   '/index.html',
@@ -11,6 +11,8 @@ const ASSETS = [
   '/src/services/feedback.js',
   '/src/views/playersView.js',
   '/src/controllers/playersController.js',
+  '/src/controllers/ratingsController.js',
+  '/src/controllers/partidoController.js',
   '/src/controllers/tabController.js',
   '/src/controllers/menuController.js',
   '/src/controllers/themeController.js',

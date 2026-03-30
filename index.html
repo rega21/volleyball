@@ -44,8 +44,8 @@
     <!-- Tab: Jugadores -->
     <section class="tab-panel active" id="panel-jugadores">
       <div class="panel-actions">
-        <button class="btn-action btn-action--search" id="searchBtn">🔍 Buscar</button>
-        <button class="btn-action btn-action--add" id="addPlayerBtn">＋ Agregar</button>
+        <button class="btn-action btn-action--search" id="searchBtn"><i data-lucide="search"></i> Buscar</button>
+        <button class="btn-action btn-action--add" id="addPlayerBtn"><i data-lucide="user-plus"></i> Agregar</button>
       </div>
       <div class="search-bar" id="searchBar" style="display:none">
         <input type="search" id="searchInput" placeholder="Buscar jugador..." />
@@ -57,7 +57,32 @@
 
     <!-- Tab: Partido -->
     <section class="tab-panel" id="panel-partido">
-      <!-- renderizado por JS -->
+
+      <!-- Paso 1: Selección de jugadores -->
+      <div id="paso-seleccion">
+        <p class="partido-hint">Seleccioná los jugadores disponibles</p>
+        <div class="player-chips" id="playerChips"></div>
+        <div class="partido-footer" id="partidoFooter" style="display:none">
+          <span class="selected-count" id="selectedCount"></span>
+          <button class="btn btn--primary" id="armarEquiposBtn">Armar equipos</button>
+        </div>
+      </div>
+
+      <!-- Paso 2: Equipos -->
+      <div id="paso-equipos" style="display:none">
+        <div class="equipos-grid">
+          <div class="equipo">
+            <h3 class="equipo__title equipo__title--a">Equipo A</h3>
+            <ul class="equipo__list" id="equipoA"></ul>
+          </div>
+          <div class="equipo">
+            <h3 class="equipo__title equipo__title--b">Equipo B</h3>
+            <ul class="equipo__list" id="equipoB"></ul>
+          </div>
+        </div>
+        <button class="btn btn--secondary" id="resetPartidoBtn">← Volver a selección</button>
+      </div>
+
     </section>
 
     <!-- Tab: Historial -->
@@ -140,6 +165,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <!-- Lucide icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Cliente Supabase -->
   <script src="src/api/client.js"></script>
@@ -158,6 +185,7 @@
   <script src="src/controllers/tabController.js"></script>
   <script src="src/controllers/menuController.js"></script>
   <script src="src/controllers/themeController.js"></script>
+  <script src="src/controllers/partidoController.js"></script>
 
   <!-- App principal -->
   <script src="app.js"></script>

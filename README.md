@@ -27,7 +27,7 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 
 **Servicios**
 - [x] `src/services/players.js` — getAll, getById, create, getPositions
-- [x] `src/services/ratings.js` — getAverages, hasVoted, vote (voter anónimo via localStorage)
+- [x] `src/services/ratings.js` — getAverages, getAllAverages, getMyVotedIds, upsert vote
 - [x] `src/services/feedback.js` — send
 
 **Vistas y controladores**
@@ -36,7 +36,8 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] `src/controllers/ratingsController.js` — modal de rating con sliders + radar chart (Chart.js), upsert de votos, pre-carga voto existente
 - [x] `src/controllers/themeController.js` — dark/light con persistencia
 - [x] `src/controllers/menuController.js` — hamburger + modal feedback
-- [x] `src/controllers/tabController.js` — navegación entre tabs
+- [x] `src/controllers/tabController.js` — navegación entre tabs con callbacks por tab
+- [x] `src/controllers/partidoController.js` — selección de jugadores, armado automático snake draft
 
 ---
 
@@ -55,12 +56,12 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [ ] Renombrar columna `recepcion` → `armado` en tabla `ratings` (por ahora se muestra como "Armado" en la UI pero la columna DB mantiene el nombre original)
 
 ### Partido
-- [ ] Tab Partido: selección de jugadores disponibles
-- [ ] Armado automático de equipos (balanceado por rating + posiciones)
-- [ ] Armado manual de equipos
-- [ ] Confirmación de partido (lugar y fecha)
+- [x] Selección de jugadores disponibles (chips toggleables)
+- [x] Armado automático de equipos (snake draft balanceado por rating)
+- [ ] Pulir UI de equipos (visual, ajustes de diseño)
+- [ ] Armado manual (mover jugadores entre equipos)
 - [ ] Compartir equipos por WhatsApp
-- [ ] Tablas Supabase: `matches`, `match_players`
+- [ ] Tablas Supabase: `matches`, `match_players` (postergado)
 
 ### Historial
 - [ ] Tab Historial: lista de partidos jugados
@@ -155,6 +156,26 @@ create table feedback (
 ---
 
 ## Notas técnicas
+
+### Service Worker — cómo funciona el caché
+
+El SW cachea todos los assets estáticos (CSS, JS, HTML, imágenes) con una clave de versión (`voley-clt-vN`).
+
+**Flujo de actualización automática:**
+1. El browser detecta que `service-worker.js` cambió (compara byte a byte)
+2. Instala el nuevo SW en segundo plano
+3. Al activarse, borra el cache viejo y descarga todo fresco
+4. El listener `updatefound` en `app.js` hace `window.location.reload()` automáticamente
+
+**Regla práctica:** cada vez que hacés un deploy con cambios de CSS o JS, hay que bumpar la versión del cache en `service-worker.js`:
+```
+const CACHE = 'voley-clt-v3'; // → v4, v5, etc.
+```
+Sin este cambio, el browser sigue sirviendo los archivos viejos del cache.
+
+**En desarrollo local:** el browser no siempre re-chequea el SW en cada recarga normal. Si ves cambios que no se reflejan, usar `Ctrl+Shift+R` (hard refresh) o ir a DevTools → Application → Service Workers → "Update on reload".
+
+---
 
 ### Modal de rating (pendiente implementar)
 - Sliders con gradiente dinámico: `linear-gradient` inline en `el.style.background`
