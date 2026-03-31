@@ -1,9 +1,16 @@
-const CACHE = 'voley-clt-v3';
+const CACHE = 'voley-clt-v4';
 const ASSETS = [
   '/',
   '/index.html',
   '/app.js',
   '/src/styles/main.css',
+  '/src/styles/base.css',
+  '/src/styles/topbar.css',
+  '/src/styles/sidemenu.css',
+  '/src/styles/bottomnav.css',
+  '/src/styles/modal.css',
+  '/src/styles/players.css',
+  '/src/styles/partido.css',
   '/src/assets/Lawn.png',
   '/src/api/client.js',
   '/src/services/players.js',
