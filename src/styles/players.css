@@ -1,0 +1,211 @@
+/* ── Panel actions ──────────────────────────────────── */
+.panel-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.btn-action {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: opacity 0.15s;
+  background: #10b981;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-action:hover { opacity: 0.85; }
+
+.btn-action svg {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  stroke: #fff;
+}
+
+.btn-action--add { background: #10b981; }
+
+/* ── Search ─────────────────────────────────────────── */
+.search-bar { margin-bottom: 16px; }
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-bar input:focus { border-color: var(--accent); }
+
+/* ── Player list ────────────────────────────────────── */
+.player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  transition: border-color 0.15s;
+}
+
+.player-card:hover { border-color: var(--accent); }
+
+.player-card__info {
+  flex: 1;
+  cursor: pointer;
+}
+
+.player-card__name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.player-card__nickname {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+
+.player-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.player-card__positions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.player-card__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* ── Rating badge ───────────────────────────────────── */
+.rating-badge {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.rating-badge--active {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+/* ── Botones de card ────────────────────────────────── */
+.btn-card {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.btn-card:hover { opacity: 0.85; }
+
+.btn-card--vote {
+  background: #fff;
+  color: #1a1a1a;
+  border: 1px solid var(--border);
+}
+
+.btn-card--edit {
+  background: #fff;
+  color: #1a1a1a;
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .btn-card--vote {
+  background: #1e3a5f;
+  color: #93c5fd;
+  border: none;
+}
+
+[data-theme="dark"] .btn-card--edit {
+  background: #1e3a2f;
+  color: #6ee7b7;
+  border: none;
+}
+
+/* ── Formulario jugador ─────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.form-group input {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+
+.form-group input:focus { border-color: var(--accent); }
+
+.position-checkboxes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.position-checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--text);
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+.position-checkboxes input[type="radio"] { accent-color: var(--accent); }
+
+.position-checkboxes label:has(input:checked) {
+  border-color: var(--accent);
+  color: var(--accent);
+}

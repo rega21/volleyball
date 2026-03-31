@@ -48,6 +48,9 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Radar chart con Chart.js reactivo en tiempo real
 - [x] Rating promedio en la card (⭐ número, "xx" si < 4 votos)
 - [x] Botón dinámico: 🗳️ VOTAR (sin voto) / ✏️ EDITAR (ya votó, pre-carga valores)
+- [x] Editar jugador haciendo click en el nombre (nombre, apodo, posición)
+- [x] Posición: radio button (una sola posición, obligatoria)
+- [x] Iconos Lucide en botones Buscar y Agregar
 - [ ] Modal detalle de jugador (ver stats completos)
 
 ### Supabase
@@ -56,10 +59,15 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [ ] Renombrar columna `recepcion` → `armado` en tabla `ratings` (por ahora se muestra como "Armado" en la UI pero la columna DB mantiene el nombre original)
 
 ### Partido
-- [x] Selección de jugadores disponibles (chips toggleables)
-- [x] Armado automático de equipos (snake draft balanceado por rating)
-- [ ] Pulir UI de equipos (visual, ajustes de diseño)
-- [ ] Armado manual (mover jugadores entre equipos)
+- [x] Selección de jugadores con filas full-width (nombre/apodo + posición + checkbox azul)
+- [x] Contador de seleccionados en tiempo real
+- [x] Toggle Balanceado / Manual
+- [x] Modo Balanceado: snake draft por rating, máx 14 jugadores (7v7)
+- [x] Modo Balanceado: swap de jugadores entre equipos con click + animación GSAP
+- [x] Modo Manual: asignación uno a uno con botones A/B por jugador
+- [x] Aviso si hay 15+ jugadores (tercer equipo pendiente)
+- [x] Footer fijo con toggle y botón de generar
+- [ ] Tercer equipo para 15+ jugadores (formato rey de la cancha)
 - [ ] Compartir equipos por WhatsApp
 - [ ] Tablas Supabase: `matches`, `match_players` (postergado)
 

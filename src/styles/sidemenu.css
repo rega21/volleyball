@@ -1,0 +1,44 @@
+/* ── Side menu ──────────────────────────────────────── */
+.sidemenu {
+  position: fixed;
+  top: 0; left: -260px;
+  width: 260px;
+  height: 100%;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+  z-index: 200;
+  transition: left 0.25s ease;
+}
+
+.sidemenu.open { left: 0; }
+
+.sidemenu__close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text);
+  margin-bottom: 24px;
+  display: block;
+}
+
+.sidemenu ul { list-style: none; }
+
+.sidemenu ul a {
+  display: block;
+  padding: 12px 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 150;
+}
+
+.overlay.visible { display: block; }

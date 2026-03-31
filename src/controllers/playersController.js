@@ -37,9 +37,9 @@ const PlayersController = (() => {
       player ? 'Editar jugador' : 'Agregar jugador';
     document.getElementById('playerName').value = player?.name || '';
     document.getElementById('playerNickname').value = player?.nickname || '';
-    const currentPositionIds = player?.player_positions?.map(p => p.position_id) || [];
-    document.querySelectorAll('#positionCheckboxes input').forEach(cb => {
-      cb.checked = currentPositionIds.includes(+cb.value);
+    const currentPositionId = player?.player_positions?.[0]?.position_id || null;
+    document.querySelectorAll('#positionCheckboxes input').forEach(rb => {
+      rb.checked = +rb.value === currentPositionId;
     });
     document.getElementById('addPlayerModal').classList.add('open');
   };
@@ -52,7 +52,7 @@ const PlayersController = (() => {
   const renderPositionCheckboxes = () => {
     document.getElementById('positionCheckboxes').innerHTML = positions.map(p => `
       <label>
-        <input type="checkbox" value="${p.id}" />
+        <input type="radio" name="playerPosition" value="${p.id}" />
         ${p.name.replace(/\s*\(.*?\)/, '')}
       </label>
     `).join('');
@@ -66,8 +66,9 @@ const PlayersController = (() => {
       const name = document.getElementById('playerName').value.trim();
       if (!name) return;
       const nickname = document.getElementById('playerNickname').value.trim();
-      const positionIds = [...document.querySelectorAll('#positionCheckboxes input:checked')]
-        .map(cb => +cb.value);
+      const checkedRb = document.querySelector('#positionCheckboxes input:checked');
+      if (!checkedRb) return;
+      const positionIds = [+checkedRb.value];
       try {
         if (editingId) {
           await PlayersService.update(editingId, { name, nickname, positionIds });

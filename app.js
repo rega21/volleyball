@@ -23,6 +23,9 @@ if ('serviceWorker' in navigator) {
     PlayersController.getRatingsMap()
   ));
 
+  TabController.onActivate('jugadores', () => PartidoController.hide());
+  TabController.onActivate('historial', () => PartidoController.hide());
+
   // Feedback submit
   document.getElementById('feedbackSubmit').addEventListener('click', async () => {
     const text = document.getElementById('feedbackText').value.trim();

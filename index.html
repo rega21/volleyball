@@ -60,16 +60,23 @@
 
       <!-- Paso 1: Selección de jugadores -->
       <div id="paso-seleccion">
-        <p class="partido-hint">Seleccioná los jugadores disponibles</p>
+        <p class="partido-hint">Seleccionados: <strong id="selectedCount">0 / 0</strong></p>
         <div class="player-chips" id="playerChips"></div>
-        <div class="partido-footer" id="partidoFooter" style="display:none">
-          <span class="selected-count" id="selectedCount"></span>
-          <button class="btn btn--primary" id="armarEquiposBtn">Armar equipos</button>
+      </div>
+
+      <!-- Paso 2b: Asignación manual -->
+      <div id="paso-manual" style="display:none">
+        <div class="manual-header">
+          <button class="manual-back" id="manualBackBtn">← Volver a selección</button>
+          <h2 class="manual-title">Asignar equipos <span id="manualCounter" class="manual-counter">A: 0 - B: 0</span></h2>
         </div>
+        <div class="manual-list" id="manualList"></div>
+        <button class="btn btn--primary" id="confirmarManualBtn" style="margin-top:16px">→ Confirmar equipos</button>
       </div>
 
       <!-- Paso 2: Equipos -->
       <div id="paso-equipos" style="display:none">
+        <p id="equipos-aviso" style="display:none" class="equipos-aviso"></p>
         <div class="equipos-grid">
           <div class="equipo">
             <h3 class="equipo__title equipo__title--a">Equipo A</h3>
@@ -91,6 +98,16 @@
     </section>
 
   </main>
+
+  <!-- Footer fijo de partido -->
+  <div class="partido-actions" id="partidoActions" style="display:none;">
+    <div class="modo-toggle" id="modoToggle">
+      <button class="modo-toggle__btn modo-toggle__btn--active" data-modo="balanceado">Balanceado</button>
+      <button class="modo-toggle__btn" data-modo="manual">Manual</button>
+    </div>
+    <button class="btn btn--primary" id="armarBalanceadoBtn">🔀 Generar equipos balanceados</button>
+    <button class="btn btn--primary" id="armarManualBtn" style="display:none">👥 Asignar equipos manualmente</button>
+  </div>
 
   <!-- Bottom nav -->
   <nav class="bottom-nav">
@@ -167,6 +184,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <!-- Lucide icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- GSAP CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 
   <!-- Cliente Supabase -->
   <script src="src/api/client.js"></script>

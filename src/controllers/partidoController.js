@@ -2,6 +2,8 @@ const PartidoController = (() => {
   let allPlayers = [];
   let ratingsMap = {};
   let selected = new Set();
+  let modo = 'balanceado';
+  let manualAssign = {}; // id → 'A' | 'B' | null
 
   // ── Balanceo snake draft ──────────────────────────────
   const getScore = (player) => {
@@ -23,71 +25,236 @@ const PartidoController = (() => {
     return { teamA, teamB };
   };
 
-  // ── Render chips ──────────────────────────────────────
-  const renderChips = () => {
-    document.getElementById('playerChips').innerHTML = allPlayers.map(p => `
-      <button class="player-chip ${selected.has(p.id) ? 'player-chip--active' : ''}"
-              data-id="${p.id}">
-        ${p.name}${p.nickname ? ` <span>"${p.nickname}"</span>` : ''}
-      </button>
-    `).join('');
-    updateFooter();
+  // ── Render lista ──────────────────────────────────────
+  const renderList = () => {
+    document.getElementById('selectedCount').textContent = `${selected.size} / ${allPlayers.length}`;
+    document.getElementById('playerChips').innerHTML = allPlayers.map(p => {
+      const active = selected.has(p.id);
+      const positions = p.player_positions
+        ?.map(pos => pos.positions.name.replace(/\s*\(.*?\)/, ''))
+        .join(' · ') || '';
+      return `
+        <button class="partido-row ${active ? 'partido-row--active' : ''}" data-id="${p.id}">
+          <span class="partido-row__name">
+            ${p.nickname || p.name}
+            ${positions ? `<span class="partido-row__pos"> · ${positions}</span>` : ''}
+          </span>
+          <span class="partido-row__check ${active ? 'partido-row__check--active' : ''}">
+            ${active ? `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>` : ''}
+          </span>
+        </button>
+      `;
+    }).join('');
+    document.getElementById('partidoActions').style.display = 'flex';
+    const canGenerate = selected.size >= 2;
+    document.getElementById('armarBalanceadoBtn').disabled = !canGenerate;
+    document.getElementById('armarManualBtn').disabled = !canGenerate;
   };
 
-  const updateFooter = () => {
-    const footer = document.getElementById('partidoFooter');
-    const count = document.getElementById('selectedCount');
-    footer.style.display = selected.size >= 2 ? 'flex' : 'none';
-    count.textContent = `${selected.size} jugadores`;
+  // ── Render manual ────────────────────────────────────
+  const renderManual = () => {
+    const players = allPlayers.filter(p => selected.has(p.id));
+    manualAssign = {};
+    players.forEach(p => manualAssign[p.id] = null);
+
+    const updateCounter = () => {
+      const a = Object.values(manualAssign).filter(v => v === 'A').length;
+      const b = Object.values(manualAssign).filter(v => v === 'B').length;
+      document.getElementById('manualCounter').textContent = `A: ${a} - B: ${b}`;
+      const total = players.length;
+      document.getElementById('confirmarManualBtn').disabled = (a + b) < total;
+    };
+
+    document.getElementById('manualList').innerHTML = players.map(p => `
+      <div class="manual-row" data-id="${p.id}">
+        <span class="manual-row__name">${p.nickname || p.name}</span>
+        <div class="manual-row__btns">
+          <button class="manual-btn" data-team="A" data-id="${p.id}">● A</button>
+          <button class="manual-btn" data-team="B" data-id="${p.id}">● B</button>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('manualList').addEventListener('click', (e) => {
+      const btn = e.target.closest('.manual-btn');
+      if (!btn) return;
+      const { id, team } = btn.dataset;
+      manualAssign[id] = team;
+      document.querySelectorAll(`.manual-btn[data-id="${id}"]`).forEach(b => {
+        b.classList.toggle('manual-btn--active', b.dataset.team === team);
+      });
+      updateCounter();
+    });
+
+    updateCounter();
+    document.getElementById('paso-seleccion').style.display = 'none';
+    document.getElementById('paso-manual').style.display = 'block';
+    document.getElementById('partidoActions').style.display = 'none';
+  };
+
+  const confirmarManual = () => {
+    const teamA = allPlayers.filter(p => manualAssign[p.id] === 'A');
+    const teamB = allPlayers.filter(p => manualAssign[p.id] === 'B');
+
+    const renderTeamList = (team) => team.map(p => {
+      const rd = ratingsMap[p.id];
+      const score = getScore(p).toFixed(1);
+      const rating = rd?.avg ? `<span class="equipo__rating">⭐ ${score}</span>` : '';
+      return `<li class="equipo__player">${p.nickname || p.name} ${rating}</li>`;
+    }).join('');
+
+    document.getElementById('equipoA').innerHTML = renderTeamList(teamA);
+    document.getElementById('equipoB').innerHTML = renderTeamList(teamB);
+    document.getElementById('equipos-aviso').style.display = 'none';
+    document.getElementById('paso-manual').style.display = 'none';
+    document.getElementById('paso-equipos').style.display = 'block';
   };
 
   // ── Render equipos ────────────────────────────────────
+  let teamA = [], teamB = [];
+  let swapSelected = null; // { id, team }
+
+  const renderTeamList = (team, teamName) => team.map(p => {
+    const rd = ratingsMap[p.id];
+    const score = getScore(p).toFixed(1);
+    const rating = rd?.avg ? `<span class="equipo__rating">⭐ ${score}</span>` : '';
+    const isSelected = swapSelected?.id === p.id;
+    return `<li class="equipo__player ${isSelected ? 'equipo__player--selected' : ''}"
+               data-id="${p.id}" data-team="${teamName}">
+              ${p.nickname || p.name} ${rating}
+            </li>`;
+  }).join('');
+
+  const renderEquipos = () => {
+    document.getElementById('equipoA').innerHTML = renderTeamList(teamA, 'A');
+    document.getElementById('equipoB').innerHTML = renderTeamList(teamB, 'B');
+  };
+
   const renderTeams = () => {
     const players = allPlayers.filter(p => selected.has(p.id));
-    const { teamA, teamB } = balanceTeams(players);
 
-    const renderList = (team) => team.map(p => {
-      const score = getScore(p).toFixed(1);
-      const rd = ratingsMap[p.id];
-      const rating = rd?.avg ? `<span class="equipo__rating">⭐ ${score}</span>` : '';
-      return `<li class="equipo__player">${p.name} ${rating}</li>`;
-    }).join('');
+    if (players.length > 14) {
+      document.getElementById('equipos-aviso').textContent =
+        `⚠️ Son ${players.length} jugadores — se necesita tercer equipo (próximamente).`;
+      document.getElementById('equipos-aviso').style.display = 'block';
+    } else {
+      document.getElementById('equipos-aviso').style.display = 'none';
+    }
 
-    document.getElementById('equipoA').innerHTML = renderList(teamA);
-    document.getElementById('equipoB').innerHTML = renderList(teamB);
+    const jugadoresPartido = players.slice(0, 14);
+    const balanced = balanceTeams(jugadoresPartido);
+    teamA = balanced.teamA;
+    teamB = balanced.teamB;
+    swapSelected = null;
+    renderEquipos();
 
     document.getElementById('paso-seleccion').style.display = 'none';
     document.getElementById('paso-equipos').style.display = 'block';
+    document.getElementById('partidoActions').style.display = 'none';
   };
 
   // ── Init ──────────────────────────────────────────────
   const init = (players, ratings) => {
     allPlayers = players;
     ratingsMap = ratings;
-    renderChips();
+    renderList();
 
     document.getElementById('playerChips').addEventListener('click', (e) => {
-      const chip = e.target.closest('.player-chip');
-      if (!chip) return;
-      const id = chip.dataset.id;
+      const row = e.target.closest('.partido-row');
+      if (!row) return;
+      const id = row.dataset.id;
       selected.has(id) ? selected.delete(id) : selected.add(id);
-      chip.classList.toggle('player-chip--active');
-      updateFooter();
+      renderList();
     });
 
-    document.getElementById('armarEquiposBtn').addEventListener('click', renderTeams);
+    document.getElementById('modoToggle').addEventListener('click', (e) => {
+      const btn = e.target.closest('.modo-toggle__btn');
+      if (!btn) return;
+      modo = btn.dataset.modo;
+      document.querySelectorAll('.modo-toggle__btn').forEach(b =>
+        b.classList.toggle('modo-toggle__btn--active', b.dataset.modo === modo)
+      );
+      document.getElementById('armarBalanceadoBtn').style.display = modo === 'balanceado' ? 'block' : 'none';
+      document.getElementById('armarManualBtn').style.display = modo === 'manual' ? 'block' : 'none';
+    });
+
+    // Swap de jugadores entre equipos
+    document.getElementById('paso-equipos').addEventListener('click', (e) => {
+      const li = e.target.closest('.equipo__player');
+      if (!li) return;
+      const id = li.dataset.id;
+      const team = li.dataset.team;
+
+      if (!swapSelected) {
+        swapSelected = { id, team };
+        renderEquipos();
+        return;
+      }
+
+      if (swapSelected.id === id) {
+        swapSelected = null;
+        renderEquipos();
+        return;
+      }
+
+      if (swapSelected.team !== team) {
+        // Swap entre equipos distintos
+        const srcList = swapSelected.team === 'A' ? teamA : teamB;
+        const dstList = swapSelected.team === 'A' ? teamB : teamA;
+        const srcIdx = srcList.findIndex(p => p.id === swapSelected.id);
+        const dstIdx = dstList.findIndex(p => p.id === id);
+        const tmp = srcList[srcIdx];
+        srcList[srcIdx] = dstList[dstIdx];
+        dstList[dstIdx] = tmp;
+      }
+
+      const swapId = swapSelected.id;
+      swapSelected = null;
+      renderEquipos();
+
+      // Animar con GSAP
+      setTimeout(() => {
+        [id, swapId].forEach(pid => {
+          const el = document.querySelector(`.equipo__player[data-id="${pid}"]`);
+          if (el) {
+            gsap.from(el, {
+              scale: 1.08,
+              backgroundColor: 'rgba(59,130,246,0.4)',
+              duration: 0.5,
+              ease: 'back.out(1.7)',
+            });
+          }
+        });
+      }, 0);
+    });
+
+    document.getElementById('armarBalanceadoBtn').addEventListener('click', renderTeams);
+    document.getElementById('armarManualBtn').addEventListener('click', renderManual);
+    document.getElementById('confirmarManualBtn').addEventListener('click', confirmarManual);
+    document.getElementById('manualBackBtn').addEventListener('click', () => {
+      document.getElementById('paso-manual').style.display = 'none';
+      document.getElementById('paso-seleccion').style.display = 'block';
+      document.getElementById('partidoActions').style.display = 'flex';
+    });
 
     document.getElementById('resetPartidoBtn').addEventListener('click', () => {
       document.getElementById('paso-seleccion').style.display = 'block';
       document.getElementById('paso-equipos').style.display = 'none';
+      document.getElementById('paso-manual').style.display = 'none';
+      document.getElementById('partidoActions').style.display = 'flex';
     });
   };
 
   const refresh = (players, ratings) => {
     allPlayers = players;
     ratingsMap = ratings;
-    renderChips();
+    document.getElementById('partidoActions').style.display = 'flex';
+    renderList();
   };
 
-  return { init, refresh };
+  const hide = () => {
+    document.getElementById('partidoActions').style.display = 'none';
+  };
+
+  return { init, refresh, hide };
 })();
