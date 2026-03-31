@@ -22,6 +22,9 @@ const RatingsController = (() => {
   let radarInstance = null;
   let currentPlayerId = null;
   let onVoteCallback = null;
+  let playersList = [];
+  let currentIndex = 0;
+  let currentVotesMap = {};
 
   // ── Slider helpers ────────────────────────────────────
   const getStatValues = () => {
@@ -111,19 +114,29 @@ const RatingsController = (() => {
   };
 
   // ── Abrir modal ───────────────────────────────────────
-  const open = (player, existingVote = null) => {
+  const loadPlayer = (index) => {
+    currentIndex = index;
+    const player = playersList[index];
+    const existingVote = currentVotesMap[player.id] || null;
+
     currentPlayerId = player.id;
-    document.getElementById('ratingPlayerName').textContent = player.name;
+    document.getElementById('ratingPlayerName').textContent = player.nickname || player.name;
     document.getElementById('ratingAlreadyVoted').style.display = 'none';
     document.getElementById('ratingSubmit').style.display = 'block';
     document.getElementById('ratingSliders').style.display = 'block';
     document.getElementById('ratingSubmit').textContent = existingVote ? 'Actualizar voto' : 'Enviar voto';
 
-    document.getElementById('ratingModal').classList.add('open');
-
     if (radarInstance) { radarInstance.destroy(); radarInstance = null; }
-
     renderSliders(existingVote);
+  };
+
+  const open = (players, index, votesMap) => {
+    playersList = players;
+    currentIndex = index;
+    currentVotesMap = votesMap;
+
+    document.getElementById('ratingModal').classList.add('open');
+    loadPlayer(index);
   };
 
   const close = () => {
@@ -137,12 +150,48 @@ const RatingsController = (() => {
 
     document.getElementById('ratingClose').addEventListener('click', close);
 
+    document.getElementById('ratingPrev').addEventListener('click', () => {
+      const prev = (currentIndex - 1 + playersList.length) % playersList.length;
+      loadPlayer(prev);
+    });
+
+    document.getElementById('ratingNext').addEventListener('click', () => {
+      const next = (currentIndex + 1) % playersList.length;
+      loadPlayer(next);
+    });
+
+    // ── Swipe táctil (excluye sliders) ───────────────────
+    let touchStartX = 0;
+    const modalContent = document.querySelector('#ratingModal .modal__content');
+    modalContent.addEventListener('touchstart', (e) => {
+      if (e.target.closest('#ratingSliders')) return;
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    modalContent.addEventListener('touchend', (e) => {
+      if (e.target.closest('#ratingSliders')) return;
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) < 40) return;
+      if (diff > 0) {
+        loadPlayer((currentIndex + 1) % playersList.length);
+      } else {
+        loadPlayer((currentIndex - 1 + playersList.length) % playersList.length);
+      }
+    }, { passive: true });
+
     document.getElementById('ratingSubmit').addEventListener('click', async () => {
       if (!currentPlayerId) return;
+      const btn = document.getElementById('ratingSubmit');
       try {
-        await RatingsService.vote(currentPlayerId, getStatValues());
-        close();
+        const vals = getStatValues();
+        await RatingsService.vote(currentPlayerId, vals);
+        currentVotesMap[currentPlayerId] = vals;
+        btn.textContent = '✓ Guardado';
+        btn.style.background = '#059669';
         if (onVoteCallback) onVoteCallback();
+        setTimeout(() => {
+          btn.textContent = 'Actualizar voto';
+          btn.style.background = '';
+        }, 1500);
       } catch (err) {
         console.error('Error enviando voto:', err);
       }

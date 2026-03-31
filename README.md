@@ -51,6 +51,8 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Editar jugador haciendo click en el nombre (nombre, apodo, posición)
 - [x] Posición: radio button (una sola posición, obligatoria)
 - [x] Iconos Lucide en botones Buscar y Agregar
+- [x] Nombre del jugador flotante en el modal de rating (position: absolute, no ocupa espacio)
+- [x] Navegación entre jugadores dentro del modal de rating: flechas < > + swipe táctil izquierda/derecha (excluye zona de sliders)
 - [ ] Modal detalle de jugador (ver stats completos)
 
 ### Supabase

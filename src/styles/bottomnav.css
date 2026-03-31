@@ -1,10 +1,6 @@
 /* ── Bottom nav ─────────────────────────────────────── */
 .bottom-nav {
-  position: fixed;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
+  flex-shrink: 0;
   height: var(--nav-h);
   background: var(--surface);
   border-top: 1px solid var(--border);

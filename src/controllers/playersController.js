@@ -125,8 +125,8 @@ const PlayersController = (() => {
       }
       const btn = e.target.closest('.btn-card');
       if (!btn) return;
-      const player = allPlayers.find(p => p.id === btn.dataset.id);
-      if (player) RatingsController.open(player, myVotedMap[player.id]);
+      const index = allPlayers.findIndex(p => p.id === btn.dataset.id);
+      if (index !== -1) RatingsController.open(allPlayers, index, myVotedMap);
     });
 
     RatingsController.init(refreshRatings);
