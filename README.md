@@ -2,7 +2,7 @@
 
 App web para gestionar jugadores, armar equipos y registrar partidos de vóley (Club de Lawn Tennis).
 
-**Stack:** HTML + CSS + Vanilla JS · Supabase (Postgres) · Chart.js · Sin bundler
+**Stack:** HTML + CSS + Vanilla JS · Supabase (Postgres) · Chart.js · GSAP (Flip plugin) · Lucide icons · Sin bundler
 
 ---
 
@@ -63,7 +63,7 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Contador de seleccionados en tiempo real
 - [x] Toggle Balanceado / Manual
 - [x] Modo Balanceado: snake draft por rating, máx 14 jugadores (7v7)
-- [x] Modo Balanceado: swap de jugadores entre equipos con click + animación GSAP
+- [x] Modo Balanceado: swap de jugadores entre equipos con click + animación GSAP FLIP (los nombres vuelan a su nueva posición) + flash verde al completar
 - [x] Modo Manual: asignación uno a uno con botones A/B por jugador
 - [x] Aviso si hay 15+ jugadores (tercer equipo pendiente)
 - [x] Footer fijo con toggle y botón de generar

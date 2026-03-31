@@ -1,3 +1,5 @@
+gsap.registerPlugin(Flip);
+
 const PartidoController = (() => {
   let allPlayers = [];
   let ratingsMap = {};
@@ -120,14 +122,39 @@ const PartidoController = (() => {
     const rating = rd?.avg ? `<span class="equipo__rating">⭐ ${score}</span>` : '';
     const isSelected = swapSelected?.id === p.id;
     return `<li class="equipo__player ${isSelected ? 'equipo__player--selected' : ''}"
-               data-id="${p.id}" data-team="${teamName}">
+               data-id="${p.id}" data-team="${teamName}" data-flip-id="${p.id}">
               ${p.nickname || p.name} ${rating}
             </li>`;
   }).join('');
 
-  const renderEquipos = () => {
-    document.getElementById('equipoA').innerHTML = renderTeamList(teamA, 'A');
-    document.getElementById('equipoB').innerHTML = renderTeamList(teamB, 'B');
+  const renderEquipos = (animate = false, swappedIds = []) => {
+    if (animate) {
+      const listA = document.getElementById('equipoA');
+      const listB = document.getElementById('equipoB');
+      const state = Flip.getState([...listA.children, ...listB.children]);
+      listA.innerHTML = renderTeamList(teamA, 'A');
+      listB.innerHTML = renderTeamList(teamB, 'B');
+      Flip.from(state, {
+        targets: [...listA.children, ...listB.children],
+        duration: 0.6,
+        ease: 'power2.inOut',
+        scale: true,
+        onComplete: () => {
+          swappedIds.forEach(pid => {
+            const el = document.querySelector(`.equipo__player[data-id="${pid}"]`);
+            if (el) {
+              gsap.fromTo(el,
+                { backgroundColor: 'rgba(16,185,129,0.35)' },
+                { backgroundColor: 'transparent', duration: 0.8, ease: 'power2.out' }
+              );
+            }
+          });
+        }
+      });
+    } else {
+      document.getElementById('equipoA').innerHTML = renderTeamList(teamA, 'A');
+      document.getElementById('equipoB').innerHTML = renderTeamList(teamB, 'B');
+    }
   };
 
   const renderTeams = () => {
@@ -210,22 +237,7 @@ const PartidoController = (() => {
 
       const swapId = swapSelected.id;
       swapSelected = null;
-      renderEquipos();
-
-      // Animar con GSAP
-      setTimeout(() => {
-        [id, swapId].forEach(pid => {
-          const el = document.querySelector(`.equipo__player[data-id="${pid}"]`);
-          if (el) {
-            gsap.from(el, {
-              scale: 1.08,
-              backgroundColor: 'rgba(59,130,246,0.4)',
-              duration: 0.5,
-              ease: 'back.out(1.7)',
-            });
-          }
-        });
-      }, 0);
+      renderEquipos(true, [id, swapId]);
     });
 
     document.getElementById('armarBalanceadoBtn').addEventListener('click', renderTeams);
