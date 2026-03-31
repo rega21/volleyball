@@ -26,6 +26,16 @@
   font-size: 1.1rem;
 }
 
+.modal__content--rating h2 {
+  position: absolute;
+  top: 12px;
+  left: 24px;
+  right: 48px; /* no solapar el botón ✕ */
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 .modal__close {
   position: absolute;
   top: 12px; right: 12px;
