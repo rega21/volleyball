@@ -1,4 +1,4 @@
-const CACHE = 'voley-clt-v8';
+const CACHE = 'voley-clt-v9';
 const ASSETS = [
   '/',
   '/index.html',

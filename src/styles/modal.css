@@ -27,33 +27,6 @@
 }
 
 
-.rating-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  line-height: 1;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.15s, background 0.15s;
-  z-index: 1;
-}
-
-.rating-nav:hover {
-  color: var(--text);
-  background: var(--border);
-}
-
-.rating-nav--prev { left: 8px; top: 50%; }
-.rating-nav--next { right: 8px; top: 50%; }
 
 .modal__close {
   position: absolute;
@@ -224,6 +197,37 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text);
+}
+
+.rating-submit-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.rating-submit-row #ratingSubmit { flex: 1; }
+
+.rating-nav-inline {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.rating-nav-inline:hover {
+  color: var(--text);
+  background: var(--border);
 }
 
 .voted-msg {

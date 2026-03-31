@@ -1,6 +1,10 @@
 /* ── Partido ────────────────────────────────────────── */
-#panel-partido {
+#panel-partido.active {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 0 16px;
+  overflow: hidden;
 }
 
 #paso-seleccion {

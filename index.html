@@ -197,8 +197,6 @@
   <div class="modal" id="ratingModal">
     <div class="modal__content modal__content--rating">
       <button class="modal__close" id="ratingClose">✕</button>
-      <button class="rating-nav rating-nav--prev" id="ratingPrev">&#8249;</button>
-      <button class="rating-nav rating-nav--next" id="ratingNext">&#8250;</button>
 
       <div class="radar-container">
         <canvas id="radarChart"></canvas>
@@ -210,7 +208,11 @@
         <p class="voted-msg">Ya votaste a este jugador ✓</p>
       </div>
 
-      <button class="btn btn--primary" id="ratingSubmit">Enviar voto</button>
+      <div class="rating-submit-row">
+        <button class="rating-nav-inline" id="ratingPrev">&#8249;</button>
+        <button class="btn btn--primary" id="ratingSubmit">Enviar voto</button>
+        <button class="rating-nav-inline" id="ratingNext">&#8250;</button>
+      </div>
     </div>
   </div>
 

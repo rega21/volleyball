@@ -1,5 +1,5 @@
 /* ── Panel jugadores ────────────────────────────────── */
-#panel-jugadores {
+#panel-jugadores.active {
   display: flex;
   flex-direction: column;
   height: 100%;
