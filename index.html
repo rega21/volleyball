@@ -35,7 +35,12 @@
   <nav class="sidemenu" id="sideMenu">
     <button class="sidemenu__close" id="menuClose">✕</button>
     <ul>
+      <li><a href="#" id="menuAdmin">Admin</a></li>
+      <li><a href="#" id="menuRatingGlobal">Rating Global</a></li>
+      <li><a href="#" id="menuTablaGeneral">Tabla General</a></li>
+      <li class="sidemenu__divider"></li>
       <li><a href="#" id="feedbackLink">Sugerencias</a></li>
+      <li><a href="#" id="menuInfoApp">Info App</a></li>
     </ul>
   </nav>
   <div class="overlay" id="overlay"></div>
@@ -143,7 +148,7 @@
         <input type="text" id="playerNickname" placeholder="Apodo (opcional)" />
       </div>
       <div class="form-group">
-        <label>Posiciones</label>
+        <label>Posición</label>
         <div class="position-checkboxes" id="positionCheckboxes">
           <!-- renderizado por JS -->
         </div>
@@ -159,6 +164,32 @@
       <h2>Sugerencias</h2>
       <textarea id="feedbackText" placeholder="Tu sugerencia..."></textarea>
       <button class="btn btn--primary" id="feedbackSubmit">Enviar</button>
+    </div>
+  </div>
+
+  <!-- Modal Info App -->
+  <div class="modal" id="infoModal">
+    <div class="modal__content modal__content--info">
+      <button class="modal__close" id="infoClose">✕</button>
+      <div class="info-header">
+        <i data-lucide="info" class="info-header__icon"></i>
+        <h2>Info App</h2>
+      </div>
+      <hr class="info-divider" />
+      <div class="info-body">
+        <img src="src/assets/Lawn.png" alt="CLT" class="info-logo" />
+        <p class="info-appname">Voley CLT</p>
+        <p class="info-version">v1.0</p>
+        <ul class="info-features">
+          <li>Crear y calificar jugadores</li>
+          <li>Armar equipos balanceados o manuales</li>
+          <li>Registrar resultados e historial del grupo</li>
+        </ul>
+        <button class="btn-install" id="installBtn" style="display:none">
+          <i data-lucide="download"></i> Descargar App
+        </button>
+        <p class="info-credit">Hecho por <strong>Agustín Rega</strong></p>
+      </div>
     </div>
   </div>
 

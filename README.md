@@ -55,8 +55,9 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Nombre del jugador en el botón de acción: "Calificar · Nombre" / "Actualizar · Nombre" (se eliminó el h2 del header para ganar espacio)
 - [x] Feedback visual tras enviar voto: botón muestra "✓ Guardado" en verde por 1.5s
 - [x] Botón VOTAR → CALIFICAR, EDITAR → ACTUALIZAR
-- [x] Ícono 👤 a la izquierda del nombre en la card para indicar que es clickeable (abre edición)
-- [x] Badge "Pendiente" sin contador de votos
+- [x] Badge "☆ Pendiente" sin contador de votos
+- [x] Botón CALIFICAR azul con borde suave, ACTUALIZAR neutro con borde gris
+- [x] Lista de jugadores con scroll interno (header fijo, lista scrolleable)
 - [ ] Modal detalle de jugador (ver stats completos)
 
 ### Supabase
@@ -84,6 +85,10 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [ ] Tablas Supabase: `match_results`
 
 ### General
+- [x] App shell refactor: topbar + content + bottom-nav en contenedor flex, sin position:fixed
+- [x] Menú hamburguesa → dropdown que nace desde el botón (Admin, Rating Global, Tabla General, Sugerencias, Info App)
+- [x] Modal Info App: logo, versión, features, crédito + botón "Descargar App" (PWA install prompt, solo aparece si aún no está instalada)
+- [x] Fix: partidoActions visible al cargar en tab jugadores (renderList ya no fuerza display:flex)
 - [ ] Feedback submit conectado a Supabase
 - [ ] Estados de carga (skeleton / spinner)
 - [ ] Manejo de errores visible al usuario (toasts)

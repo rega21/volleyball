@@ -47,7 +47,6 @@ const PartidoController = (() => {
         </button>
       `;
     }).join('');
-    document.getElementById('partidoActions').style.display = 'flex';
     const canGenerate = selected.size >= 2;
     document.getElementById('armarBalanceadoBtn').disabled = !canGenerate;
     document.getElementById('armarManualBtn').disabled = !canGenerate;

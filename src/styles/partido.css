@@ -1,4 +1,8 @@
 /* ── Partido ────────────────────────────────────────── */
+#panel-partido {
+  padding: 0 16px;
+}
+
 #paso-seleccion {
   display: flex;
   flex-direction: column;

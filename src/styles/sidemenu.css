@@ -1,36 +1,45 @@
 /* ── Side menu ──────────────────────────────────────── */
 .sidemenu {
-  position: fixed;
-  top: 0; left: -260px;
-  width: 260px;
-  height: 100%;
+  position: absolute;
+  top: var(--topbar-h);
+  right: 12px;
+  width: 200px;
   background: var(--surface);
-  border-right: 1px solid var(--border);
-  padding: 24px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
   z-index: 200;
-  transition: left 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.sidemenu.open { left: 0; }
-
-.sidemenu__close {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: var(--text);
-  margin-bottom: 24px;
-  display: block;
+.sidemenu.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
+
+.sidemenu__close { display: none; }
 
 .sidemenu ul { list-style: none; }
 
 .sidemenu ul a {
   display: block;
-  padding: 12px 8px;
+  padding: 10px 12px;
   color: var(--text);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+}
+
+.sidemenu ul a:hover { color: var(--accent); }
+
+.sidemenu__divider {
+  border-top: 1px solid var(--border);
+  margin: 8px 0;
 }
 
 .overlay {

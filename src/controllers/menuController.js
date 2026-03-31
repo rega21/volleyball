@@ -22,6 +22,17 @@ const MenuController = (() => {
     document.getElementById('feedbackClose').addEventListener('click', () => {
       document.getElementById('feedbackModal').classList.remove('open');
     });
+
+    document.getElementById('menuInfoApp').addEventListener('click', (e) => {
+      e.preventDefault();
+      close();
+      document.getElementById('infoModal').classList.add('open');
+      lucide.createIcons();
+    });
+
+    document.getElementById('infoClose').addEventListener('click', () => {
+      document.getElementById('infoModal').classList.remove('open');
+    });
   };
 
   return { init };

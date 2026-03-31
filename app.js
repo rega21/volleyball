@@ -1,3 +1,21 @@
+// ── PWA Install prompt ────────────────────────────────
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  document.getElementById('installBtn').style.display = 'flex';
+});
+
+document.getElementById('installBtn').addEventListener('click', async () => {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  if (outcome === 'accepted') {
+    document.getElementById('installBtn').style.display = 'none';
+    deferredInstallPrompt = null;
+  }
+});
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js').then(reg => {
     reg.addEventListener('updatefound', () => {
@@ -25,6 +43,8 @@ if ('serviceWorker' in navigator) {
 
   TabController.onActivate('jugadores', () => PartidoController.hide());
   TabController.onActivate('historial', () => PartidoController.hide());
+
+  TabController.switchTab('jugadores');
 
   // Feedback submit
   document.getElementById('feedbackSubmit').addEventListener('click', async () => {
