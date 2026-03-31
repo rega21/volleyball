@@ -3,7 +3,7 @@ const PlayersView = (() => {
 
   const renderRating = (ratingData) => {
     if (!ratingData) return '<span class="rating-badge">Pendiente</span>';
-    if (!ratingData.avg) return `<span class="rating-badge">Pendiente <small>(${ratingData.voteCount}/${RatingsService.MIN_VOTES})</small></span>`;
+    if (!ratingData.avg) return '<span class="rating-badge">Pendiente</span>';
     const overall = +(Object.values(ratingData.avg).reduce((a, b) => a + b, 0) / RatingsService.STATS.length).toFixed(1);
     return `<span class="rating-badge rating-badge--active">⭐ ${overall}</span>`;
   };
@@ -21,7 +21,7 @@ const PlayersView = (() => {
     return `
       <div class="player-card" data-id="${player.id}">
         <div class="player-card__info" data-edit-id="${player.id}">
-          <div class="player-card__name">${player.name}
+          <div class="player-card__name"><span class="player-card__edit-icon">👤</span>${player.name}
             ${player.nickname ? `<span class="player-card__nickname">"${player.nickname}"</span>` : ''}
           </div>
           <div class="player-card__meta">

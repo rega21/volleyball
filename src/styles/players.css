@@ -84,6 +84,12 @@
   margin-left: 6px;
 }
 
+.player-card__edit-icon {
+  font-size: 0.85rem;
+  margin-right: 6px;
+  opacity: 0.5;
+}
+
 .player-card__meta {
   display: flex;
   align-items: center;

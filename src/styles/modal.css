@@ -26,18 +26,6 @@
   font-size: 1.1rem;
 }
 
-.modal__content--rating h2 {
-  position: absolute;
-  top: 12px;
-  left: 24px;
-  right: 48px;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 .rating-nav {
   position: absolute;
@@ -64,8 +52,8 @@
   background: var(--border);
 }
 
-.rating-nav--prev { left: 8px; }
-.rating-nav--next { right: 8px; }
+.rating-nav--prev { left: 8px; top: 50%; }
+.rating-nav--next { right: 8px; top: 50%; }
 
 .modal__close {
   position: absolute;

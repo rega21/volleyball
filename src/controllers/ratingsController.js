@@ -120,11 +120,11 @@ const RatingsController = (() => {
     const existingVote = currentVotesMap[player.id] || null;
 
     currentPlayerId = player.id;
-    document.getElementById('ratingPlayerName').textContent = player.nickname || player.name;
     document.getElementById('ratingAlreadyVoted').style.display = 'none';
     document.getElementById('ratingSubmit').style.display = 'block';
     document.getElementById('ratingSliders').style.display = 'block';
-    document.getElementById('ratingSubmit').textContent = existingVote ? 'Actualizar voto' : 'Enviar voto';
+    const displayName = player.nickname || player.name;
+    document.getElementById('ratingSubmit').textContent = existingVote ? `Actualizar · ${displayName}` : `Calificar · ${displayName}`;
 
     if (radarInstance) { radarInstance.destroy(); radarInstance = null; }
     renderSliders(existingVote);
@@ -185,11 +185,12 @@ const RatingsController = (() => {
         const vals = getStatValues();
         await RatingsService.vote(currentPlayerId, vals);
         currentVotesMap[currentPlayerId] = vals;
+        const name = playersList[currentIndex]?.nickname || playersList[currentIndex]?.name || '';
         btn.textContent = '✓ Guardado';
         btn.style.background = '#059669';
         if (onVoteCallback) onVoteCallback();
         setTimeout(() => {
-          btn.textContent = 'Actualizar voto';
+          btn.textContent = `Actualizar · ${name}`;
           btn.style.background = '';
         }, 1500);
       } catch (err) {
