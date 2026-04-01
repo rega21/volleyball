@@ -62,7 +62,11 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 
 ### Supabase
 - [ ] View `player_avg_ratings` — promedio de stats con mínimo 4 votos
-- [ ] RLS (Row Level Security) — todas las tablas están en UNRESTRICTED (acceso público total). Revisar si se agrega autenticación en el futuro
+- [x] RLS habilitado en todas las tablas — ver [SUPABASE.md](SUPABASE.md) para detalle completo
+- [x] Vista `active_players` con soft delete (columna `deleted_at`)
+- [x] `upsert` atómico en `player_positions` (sin DELETE intermedio)
+- [x] Constraint `UNIQUE (player_id, voter_id)` en `ratings`
+- [x] Constraint `UNIQUE (player_id)` en `player_positions`
 - [ ] Renombrar columna `recepcion` → `armado` en tabla `ratings` (por ahora se muestra como "Armado" en la UI pero la columna DB mantiene el nombre original)
 
 ### Partido

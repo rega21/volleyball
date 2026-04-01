@@ -32,9 +32,10 @@ const PartidoController = (() => {
     document.getElementById('selectedCount').textContent = `${selected.size} / ${allPlayers.length}`;
     document.getElementById('playerChips').innerHTML = allPlayers.map(p => {
       const active = selected.has(p.id);
-      const positions = p.player_positions
-        ?.map(pos => pos.positions.name.replace(/\s*\(.*?\)/, ''))
-        .join(' · ') || '';
+      const positions = (Array.isArray(p.player_positions) ? p.player_positions : [])
+        .map(pos => pos.positions?.name.replace(/\s*\(.*?\)/, '') || '')
+        .filter(Boolean)
+        .join(' · ');
       return `
         <button class="partido-row ${active ? 'partido-row--active' : ''}" data-id="${p.id}">
           <span class="partido-row__name">

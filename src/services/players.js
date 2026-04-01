@@ -8,6 +8,7 @@ const PlayersService = (() => {
         id, name, nickname, created_at,
         player_positions ( position_id, positions ( name, slug ) )
       `)
+      .is('deleted_at', null)
       .order('name');
 
     if (error) throw error;
@@ -22,6 +23,7 @@ const PlayersService = (() => {
         player_positions ( position_id, positions ( name, slug ) )
       `)
       .eq('id', id)
+      .is('deleted_at', null)
       .single();
 
     if (error) throw error;
@@ -53,11 +55,12 @@ const PlayersService = (() => {
       .eq('id', id);
     if (error) throw error;
 
-    // Reemplaza posiciones
-    await db.from('player_positions').delete().eq('player_id', id);
+    // Actualiza posición con upsert (atómico, sin DELETE intermedio)
     if (positionIds?.length) {
-      const rows = positionIds.map(position_id => ({ player_id: id, position_id }));
-      const { error: posError } = await db.from('player_positions').insert(rows);
+      const { error: posError } = await db.from('player_positions').upsert(
+        { player_id: id, position_id: positionIds[0] },
+        { onConflict: 'player_id' }
+      );
       if (posError) throw posError;
     }
   };
