@@ -2,7 +2,7 @@
 <html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Voley</title>
   <link rel="stylesheet" href="src/styles/main.css" />
   <link rel="manifest" href="manifest.json" />
@@ -94,7 +94,10 @@
             <ul class="equipo__list" id="equipoB"></ul>
           </div>
         </div>
-        <button class="btn btn--secondary" id="resetPartidoBtn">← Volver a selección</button>
+        <div class="equipos-footer">
+          <button class="btn btn--secondary" id="resetPartidoBtn">← Volver</button>
+          <button class="btn btn--primary" id="confirmarPartidoBtn">Confirmar partido</button>
+        </div>
       </div>
 
     </section>
@@ -232,6 +235,7 @@
   <!-- Servicios -->
   <script src="src/services/players.js"></script>
   <script src="src/services/ratings.js"></script>
+  <script src="src/services/matches.js"></script>
   <script src="src/services/feedback.js"></script>
 
   <!-- Vistas -->
@@ -244,6 +248,7 @@
   <script src="src/controllers/menuController.js"></script>
   <script src="src/controllers/themeController.js"></script>
   <script src="src/controllers/partidoController.js"></script>
+  <script src="src/controllers/historialController.js"></script>
 
   <!-- App principal -->
   <script src="app.js"></script>

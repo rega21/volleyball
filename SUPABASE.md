@@ -46,6 +46,8 @@ Relación jugador ↔ posición (1 posición por jugador).
 - SELECT, INSERT, UPDATE: público
 - DELETE: no permitido — se usa `upsert` con `onConflict: player_id`
 
+> **Atención JS:** cuando hay exactamente 1 fila relacionada, el cliente Supabase JS devuelve `player_positions` como **objeto** en vez de **array**. Siempre normalizar: `Array.isArray(pp) ? pp : (pp ? [pp] : [])`
+
 ---
 
 ### `ratings`
@@ -134,9 +136,40 @@ SUPABASE_ANON_KEY=eyJ...
 
 ---
 
+### `matches`
+Partidos jugados.
+
+| Columna | Tipo | Notas |
+|---|---|---|
+| id | uuid | PK, auto |
+| category | text | Default `'lawn'` — permite múltiples categorías a futuro |
+| played_at | timestamptz | Fecha del partido |
+| created_at | timestamptz | Auto |
+| score_a | smallint | Resultado equipo A (nullable, se carga después) |
+| score_b | smallint | Resultado equipo B (nullable) |
+| score_c | smallint | Resultado equipo C (nullable, para 3 equipos a futuro) |
+
+**RLS:** habilitado — SELECT e INSERT público.
+
+---
+
+### `match_players`
+Jugadores por partido y equipo.
+
+| Columna | Tipo | Notas |
+|---|---|---|
+| match_id | uuid | FK → matches (cascade delete) |
+| player_id | uuid | FK → players (cascade delete) |
+| team | text | `'A'`, `'B'`, `'C'`... — text para soportar más de 2 equipos |
+
+**PK:** `(match_id, player_id)`
+
+**RLS:** habilitado — SELECT e INSERT público.
+
+---
+
 ## Pendiente
 
 - Renombrar columna `recepcion` → `armado` en tabla `ratings`
 - Tabla `admins` para gestión de jugadores con PIN
-- Tablas `matches` y `match_results` para historial de partidos
 - View `player_avg_ratings` — promedio por jugador con mínimo 4 votos

@@ -32,7 +32,8 @@ const PartidoController = (() => {
     document.getElementById('selectedCount').textContent = `${selected.size} / ${allPlayers.length}`;
     document.getElementById('playerChips').innerHTML = allPlayers.map(p => {
       const active = selected.has(p.id);
-      const positions = (Array.isArray(p.player_positions) ? p.player_positions : [])
+      const _pp = p.player_positions;
+      const positions = (Array.isArray(_pp) ? _pp : (_pp ? [_pp] : []))
         .map(pos => pos.positions?.name.replace(/\s*\(.*?\)/, '') || '')
         .filter(Boolean)
         .join(' · ');
@@ -109,7 +110,7 @@ const PartidoController = (() => {
     document.getElementById('equipoB').innerHTML = renderTeamList(teamB);
     document.getElementById('equipos-aviso').style.display = 'none';
     document.getElementById('paso-manual').style.display = 'none';
-    document.getElementById('paso-equipos').style.display = 'block';
+    document.getElementById('paso-equipos').style.display = 'flex';
   };
 
   // ── Render equipos ────────────────────────────────────
@@ -121,9 +122,14 @@ const PartidoController = (() => {
     const score = getScore(p).toFixed(1);
     const rating = rd?.avg ? `<span class="equipo__rating">⭐ ${score}</span>` : '';
     const isSelected = swapSelected?.id === p.id;
+    const _pp2 = p.player_positions;
+    const pos = (Array.isArray(_pp2) ? _pp2 : (_pp2 ? [_pp2] : []))
+      .map(pp => pp.positions?.name.replace(/\s*\(.*?\)/, '') || '')
+      .filter(Boolean)[0] || '';
     return `<li class="equipo__player ${isSelected ? 'equipo__player--selected' : ''}"
                data-id="${p.id}" data-team="${teamName}" data-flip-id="${p.id}">
-              ${p.nickname || p.name} ${rating}
+              <span class="equipo__name">${p.nickname || p.name}${pos ? `<span class="equipo__pos"> · ${pos}</span>` : ''}</span>
+              ${rating}
             </li>`;
   }).join('');
 
@@ -176,7 +182,7 @@ const PartidoController = (() => {
     renderEquipos();
 
     document.getElementById('paso-seleccion').style.display = 'none';
-    document.getElementById('paso-equipos').style.display = 'block';
+    document.getElementById('paso-equipos').style.display = 'flex';
     document.getElementById('partidoActions').style.display = 'none';
   };
 
@@ -247,6 +253,26 @@ const PartidoController = (() => {
       document.getElementById('paso-manual').style.display = 'none';
       document.getElementById('paso-seleccion').style.display = 'block';
       document.getElementById('partidoActions').style.display = 'flex';
+    });
+
+    document.getElementById('confirmarPartidoBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('confirmarPartidoBtn');
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+      try {
+        await MatchesService.save(teamA, teamB);
+        btn.textContent = '✓ Guardado';
+        btn.style.background = '#059669';
+        setTimeout(() => {
+          btn.textContent = 'Confirmar partido';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 2000);
+      } catch (err) {
+        console.error('Error guardando partido:', err);
+        btn.textContent = 'Error al guardar';
+        btn.disabled = false;
+      }
     });
 
     document.getElementById('resetPartidoBtn').addEventListener('click', () => {

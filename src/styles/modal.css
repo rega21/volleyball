@@ -210,24 +210,18 @@
 
 .rating-nav-inline {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--bg);
+  background: none;
+  border: none;
   color: var(--text-muted);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.15s, background 0.15s;
+  padding: 0 4px;
+  transition: color 0.15s;
 }
 
 .rating-nav-inline:hover {
   color: var(--text);
-  background: var(--border);
 }
 
 .voted-msg {

@@ -37,7 +37,8 @@ const PlayersController = (() => {
       player ? 'Editar jugador' : 'Agregar jugador';
     document.getElementById('playerName').value = player?.name || '';
     document.getElementById('playerNickname').value = player?.nickname || '';
-    const currentPositionId = player?.player_positions?.[0]?.position_id || null;
+    const pp = player?.player_positions;
+    const currentPositionId = Array.isArray(pp) ? pp[0]?.position_id : pp?.position_id;
     document.querySelectorAll('#positionCheckboxes input').forEach(rb => {
       rb.checked = +rb.value === currentPositionId;
     });

@@ -80,13 +80,15 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Footer fijo con toggle y botón de generar
 - [ ] Tercer equipo para 15+ jugadores (formato rey de la cancha)
 - [ ] Compartir equipos por WhatsApp
-- [ ] Tablas Supabase: `matches`, `match_players` (postergado)
+- [x] Tablas Supabase: `matches`, `match_players`
+- [x] Botón "Confirmar partido" — guarda equipos en Supabase
 
 ### Historial
-- [ ] Tab Historial: lista de partidos jugados
-- [ ] Registro de resultado (sets) y MVP
+- [x] Tab Historial: lista de partidos con diseño de card (equipos a los lados, score en el centro)
+- [x] Cargar resultado desde el historial (modal con score A y B)
+- [x] Soporte para score_c (tercer equipo, a futuro)
 - [ ] Vista detalle de partido
-- [ ] Tablas Supabase: `match_results`
+- [ ] Compartir resultado
 
 ### General
 - [x] App shell refactor: topbar + content + bottom-nav en contenedor flex, sin position:fixed

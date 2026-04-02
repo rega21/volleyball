@@ -42,7 +42,10 @@ if ('serviceWorker' in navigator) {
   ));
 
   TabController.onActivate('jugadores', () => PartidoController.hide());
-  TabController.onActivate('historial', () => PartidoController.hide());
+  TabController.onActivate('historial', () => {
+    PartidoController.hide();
+    HistorialController.load();
+  });
 
   TabController.switchTab('jugadores');
 

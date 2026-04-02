@@ -14,8 +14,8 @@ const RatingsController = (() => {
     remate:    '#FF4C4C',
     defensa:   '#00E5FF',
     saque:     '#2ECC71',
-    recepcion: '#F1C40F',
-    movilidad: '#F97316',
+    recepcion: '#F97316',
+    movilidad: '#F1C40F',
     tecnica:   '#9B59B6',
   };
 
@@ -68,8 +68,7 @@ const RatingsController = (() => {
           borderColor: color,
           backgroundColor: color + '33',
           borderWidth: 2,
-          pointBackgroundColor: color,
-          pointRadius: 3,
+          pointRadius: 0,
         }],
       },
       options: {
