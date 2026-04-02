@@ -267,7 +267,8 @@ const PartidoController = (() => {
           btn.textContent = 'Confirmar partido';
           btn.style.background = '';
           btn.disabled = false;
-        }, 2000);
+          TabController.switchTab('historial');
+        }, 1000);
       } catch (err) {
         console.error('Error guardando partido:', err);
         btn.textContent = 'Error al guardar';
@@ -294,5 +295,17 @@ const PartidoController = (() => {
     document.getElementById('partidoActions').style.display = 'none';
   };
 
-  return { init, refresh, hide };
+  const startRevancha = (idsA, idsB) => {
+    teamA = allPlayers.filter(p => idsA.includes(p.id));
+    teamB = allPlayers.filter(p => idsB.includes(p.id));
+    swapSelected = null;
+    renderEquipos();
+    document.getElementById('paso-seleccion').style.display = 'none';
+    document.getElementById('paso-manual').style.display = 'none';
+    document.getElementById('paso-equipos').style.display = 'flex';
+    document.getElementById('partidoActions').style.display = 'none';
+    document.getElementById('equipos-aviso').style.display = 'none';
+  };
+
+  return { init, refresh, hide, startRevancha };
 })();

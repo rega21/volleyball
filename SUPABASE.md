@@ -149,7 +149,9 @@ Partidos jugados.
 | score_b | smallint | Resultado equipo B (nullable) |
 | score_c | smallint | Resultado equipo C (nullable, para 3 equipos a futuro) |
 
-**RLS:** habilitado — SELECT e INSERT público.
+**RLS:** habilitado — SELECT, INSERT y UPDATE público.
+
+> UPDATE requerido para cargar scores después del partido (`score_a`, `score_b`, `score_c`).
 
 ---
 

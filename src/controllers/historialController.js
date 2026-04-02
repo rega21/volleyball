@@ -1,5 +1,6 @@
 const HistorialController = (() => {
   let matches = [];
+  let editingMatchId = null;
 
   const formatDate = (iso) => {
     const d = new Date(iso);
@@ -65,21 +66,36 @@ const HistorialController = (() => {
       <div class="modal" id="scoreModal">
         <div class="modal__content">
           <button class="modal__close" id="scoreClose">✕</button>
-          <h2>Cargar resultado</h2>
-          <div class="score-inputs">
-            <label>Equipo A <input type="number" id="scoreA" min="0" max="99" class="score-input" /></label>
-            <label>Equipo B <input type="number" id="scoreB" min="0" max="99" class="score-input" /></label>
+          <h2 id="scoreModalTitle">Cargar resultado</h2>
+          <div id="scoreForm">
+            <div class="score-inputs">
+              <label>Equipo A <input type="number" id="scoreA" min="0" class="score-input" /></label>
+              <label>Equipo B <input type="number" id="scoreB" min="0" class="score-input" /></label>
+            </div>
+            <button class="btn btn--primary" id="scoreSubmit" style="margin-top:16px;width:100%">Guardar resultado</button>
           </div>
-          <button class="btn btn--primary" id="scoreSubmit" style="margin-top:16px;width:100%">Guardar resultado</button>
+          <div id="revanchaPrompt" style="display:none;text-align:center;padding:8px 0">
+            <div style="display:flex;gap:12px;margin-top:8px">
+              <button class="btn btn--secondary" id="revanchaNo">No</button>
+              <button class="btn btn--primary" id="revanchaSi">Sí, revancha</button>
+            </div>
+          </div>
         </div>
       </div>
     `;
 
-    let editingMatchId = null;
-
     document.getElementById('scoreClose').addEventListener('click', () => {
       document.getElementById('scoreModal').classList.remove('open');
     });
+
+    const resetScoreModal = () => {
+      document.getElementById('scoreModalTitle').textContent = 'Cargar resultado';
+      document.getElementById('scoreForm').style.display = 'block';
+      document.getElementById('revanchaPrompt').style.display = 'none';
+      const btn = document.getElementById('scoreSubmit');
+      btn.disabled = false;
+      btn.textContent = 'Guardar resultado';
+    };
 
     panel.addEventListener('click', (e) => {
       const btn = e.target.closest('.historial-score-btn');
@@ -87,25 +103,43 @@ const HistorialController = (() => {
       editingMatchId = btn.dataset.id;
       document.getElementById('scoreA').value = '';
       document.getElementById('scoreB').value = '';
+      resetScoreModal();
       document.getElementById('scoreModal').classList.add('open');
     });
 
     document.getElementById('scoreSubmit').addEventListener('click', async () => {
       const a = +document.getElementById('scoreA').value;
       const b = +document.getElementById('scoreB').value;
-      if (isNaN(a) || isNaN(b)) return;
+      if (isNaN(a) || isNaN(b) || a < 0 || b < 0) return;
       const btn = document.getElementById('scoreSubmit');
       btn.disabled = true;
       btn.textContent = 'Guardando...';
       try {
         await MatchesService.updateScore(editingMatchId, a, b);
-        document.getElementById('scoreModal').classList.remove('open');
         await load();
+        document.getElementById('scoreModalTitle').textContent = '¿Revancha?';
+        document.getElementById('scoreForm').style.display = 'none';
+        document.getElementById('revanchaPrompt').style.display = 'block';
+        document.getElementById('scoreModal').classList.add('open');
       } catch (err) {
         console.error('Error guardando resultado:', err);
         btn.disabled = false;
         btn.textContent = 'Guardar resultado';
       }
+    });
+
+    document.getElementById('revanchaNo').addEventListener('click', () => {
+      document.getElementById('scoreModal').classList.remove('open');
+    });
+
+    document.getElementById('revanchaSi').addEventListener('click', () => {
+      const match = matches.find(m => m.id === editingMatchId);
+      const mp = Array.isArray(match?.match_players) ? match.match_players : [];
+      const idsA = mp.filter(p => p.team === 'A').map(p => p.player_id);
+      const idsB = mp.filter(p => p.team === 'B').map(p => p.player_id);
+      document.getElementById('scoreModal').classList.remove('open');
+      TabController.switchTab('partido');
+      PartidoController.startRevancha(idsA, idsB);
     });
   };
 
