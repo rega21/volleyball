@@ -251,7 +251,7 @@ const PartidoController = (() => {
     document.getElementById('confirmarManualBtn').addEventListener('click', confirmarManual);
     document.getElementById('manualBackBtn').addEventListener('click', () => {
       document.getElementById('paso-manual').style.display = 'none';
-      document.getElementById('paso-seleccion').style.display = 'block';
+      document.getElementById('paso-seleccion').style.display = 'flex';
       document.getElementById('partidoActions').style.display = 'flex';
     });
 
@@ -277,7 +277,7 @@ const PartidoController = (() => {
     });
 
     document.getElementById('resetPartidoBtn').addEventListener('click', () => {
-      document.getElementById('paso-seleccion').style.display = 'block';
+      document.getElementById('paso-seleccion').style.display = 'flex';
       document.getElementById('paso-equipos').style.display = 'none';
       document.getElementById('paso-manual').style.display = 'none';
       document.getElementById('partidoActions').style.display = 'flex';
