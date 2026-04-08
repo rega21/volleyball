@@ -208,6 +208,13 @@
 
 .rating-submit-row #ratingSubmit { flex: 1; }
 
+.rating-submit-row #ratingSubmit:disabled {
+  background: #4b5563;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
 .rating-nav-inline {
   flex-shrink: 0;
   background: none;

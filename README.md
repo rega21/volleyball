@@ -59,6 +59,8 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Badge "☆ Pendiente" sin contador de votos
 - [x] Botón CALIFICAR azul con borde suave, ACTUALIZAR neutro con borde gris
 - [x] Lista de jugadores con scroll interno (header fijo, lista scrolleable)
+- [x] Lista de jugadores en orden aleatorio en cada render
+- [x] Botón "Calificar" deshabilitado (gris) si todos los sliders están en 0
 - [x] Modal "Calificación del grupo": click en estrella ⭐ abre radar read-only con avg del jugador, navegación < > y swipe entre jugadores calificados, dots de paginación
 - [x] Menú hamburguesa → "Calificación del grupo" abre un jugador al azar (deshabilitado si no hay calificaciones)
 
@@ -77,7 +79,7 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Toggle Balanceado / Manual
 - [x] Modo Balanceado: snake draft por rating, máx 14 jugadores (7v7)
 - [x] Modo Balanceado: swap de jugadores entre equipos con click + animación GSAP FLIP (los nombres vuelan a su nueva posición) + flash verde al completar
-- [x] Modo Manual: asignación uno a uno con botones A/B por jugador
+- [x] Modo Manual: asignación uno a uno con botones A/B por jugador, con scroll y swap animado (GSAP Flip) igual que modo balanceado
 - [x] Aviso si hay 15+ jugadores (tercer equipo pendiente)
 - [x] Footer fijo con toggle y botón de generar
 - [ ] Tercer equipo para 15+ jugadores (formato rey de la cancha)

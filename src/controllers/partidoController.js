@@ -91,23 +91,15 @@ const PartidoController = (() => {
 
     updateCounter();
     document.getElementById('paso-seleccion').style.display = 'none';
-    document.getElementById('paso-manual').style.display = 'block';
+    document.getElementById('paso-manual').style.display = 'flex';
     document.getElementById('partidoActions').style.display = 'none';
   };
 
   const confirmarManual = () => {
-    const teamA = allPlayers.filter(p => manualAssign[p.id] === 'A');
-    const teamB = allPlayers.filter(p => manualAssign[p.id] === 'B');
-
-    const renderTeamList = (team) => team.map(p => {
-      const rd = ratingsMap[p.id];
-      const score = getScore(p).toFixed(1);
-      const rating = rd?.avg ? `<span class="equipo__rating">⭐ ${score}</span>` : '';
-      return `<li class="equipo__player">${p.nickname || p.name} ${rating}</li>`;
-    }).join('');
-
-    document.getElementById('equipoA').innerHTML = renderTeamList(teamA);
-    document.getElementById('equipoB').innerHTML = renderTeamList(teamB);
+    teamA = allPlayers.filter(p => manualAssign[p.id] === 'A');
+    teamB = allPlayers.filter(p => manualAssign[p.id] === 'B');
+    swapSelected = null;
+    renderEquipos();
     document.getElementById('equipos-aviso').style.display = 'none';
     document.getElementById('paso-manual').style.display = 'none';
     document.getElementById('paso-equipos').style.display = 'flex';

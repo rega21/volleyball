@@ -38,7 +38,8 @@ const PlayersView = (() => {
       list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:32px 0">Sin jugadores</p>';
       return;
     }
-    list.innerHTML = players.map(p => renderCard(p, ratingsMap[p.id], myVotedMap[p.id])).join('');
+    const shuffled = [...players].sort(() => Math.random() - 0.5);
+    list.innerHTML = shuffled.map(p => renderCard(p, ratingsMap[p.id], myVotedMap[p.id])).join('');
   };
 
   const renderEmpty = (msg = 'Sin resultados') => {

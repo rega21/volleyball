@@ -102,14 +102,22 @@ const RatingsController = (() => {
       `;
     }).join('');
 
+    const checkSubmitEnabled = () => {
+      const vals = getStatValues();
+      const allZero = Object.values(vals).every(v => v === 0);
+      document.getElementById('ratingSubmit').disabled = allZero;
+    };
+
     STATS.forEach(s => {
       document.getElementById(`slider-${s}`).addEventListener('input', () => {
         document.getElementById(`val-${s}`).textContent = document.getElementById(`slider-${s}`).value;
         updateRadar(getStatValues());
+        checkSubmitEnabled();
       });
     });
 
     updateRadar(getStatValues());
+    checkSubmitEnabled();
   };
 
   // ── Abrir modal ───────────────────────────────────────
