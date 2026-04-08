@@ -76,7 +76,7 @@ const RatingsController = (() => {
         scales: {
           r: {
             min: 0, max: 10,
-            ticks: { display: false, stepSize: 2 },
+            ticks: { display: false, stepSize: 1 },
             grid: { color: 'rgba(128,128,128,0.2)' },
             pointLabels: {
               color: getComputedStyle(document.documentElement).getPropertyValue('--text').trim(),

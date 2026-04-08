@@ -34,6 +34,7 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] `src/views/playersView.js` — render lista + cards con rating y botón dinámico (VOTAR/EDITAR)
 - [x] `src/controllers/playersController.js` — carga, búsqueda toggle, modal agregar/editar jugador
 - [x] `src/controllers/ratingsController.js` — modal de rating con sliders + radar chart (Chart.js), upsert de votos, pre-carga voto existente
+- [x] `src/controllers/ratingViewController.js` — modal read-only "Calificación del grupo" con radar avg, navegación < > / swipe, dots, tendencia ▲▼
 - [x] `src/controllers/themeController.js` — dark/light con persistencia
 - [x] `src/controllers/menuController.js` — hamburger + modal feedback
 - [x] `src/controllers/tabController.js` — navegación entre tabs con callbacks por tab
@@ -58,7 +59,8 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Badge "☆ Pendiente" sin contador de votos
 - [x] Botón CALIFICAR azul con borde suave, ACTUALIZAR neutro con borde gris
 - [x] Lista de jugadores con scroll interno (header fijo, lista scrolleable)
-- [ ] Modal detalle de jugador (ver stats completos)
+- [x] Modal "Calificación del grupo": click en estrella ⭐ abre radar read-only con avg del jugador, navegación < > y swipe entre jugadores calificados, dots de paginación
+- [x] Menú hamburguesa → "Calificación del grupo" abre un jugador al azar (deshabilitado si no hay calificaciones)
 
 ### Supabase
 - [ ] View `player_avg_ratings` — promedio de stats con mínimo 4 votos
@@ -92,7 +94,7 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 
 ### General
 - [x] App shell refactor: topbar + content + bottom-nav en contenedor flex, sin position:fixed
-- [x] Menú hamburguesa → dropdown que nace desde el botón (Admin, Rating Global, Tabla General, Sugerencias, Info App)
+- [x] Menú hamburguesa → dropdown que nace desde el botón (Admin, Calificación del grupo, Tabla General, Sugerencias, Info App)
 - [x] Modal Info App: logo, versión, features, crédito + botón "Descargar App" (PWA install prompt, solo aparece si aún no está instalada)
 - [x] Fix: partidoActions visible al cargar en tab jugadores (renderList ya no fuerza display:flex)
 - [ ] Feedback submit conectado a Supabase

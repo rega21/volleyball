@@ -118,6 +118,12 @@ const PlayersController = (() => {
 
     // Delegación para VOTAR y EDITAR voto
     document.getElementById('playerList').addEventListener('click', (e) => {
+      // Badge rating → abre modal de visualización (si tiene avg)
+      const badge = e.target.closest('.rating-badge--btn');
+      if (badge) {
+        RatingViewController.open(allPlayers, ratingsMap, badge.dataset.viewId);
+        return;
+      }
       const infoArea = e.target.closest('.player-card__info');
       if (infoArea) {
         const player = allPlayers.find(p => p.id === infoArea.dataset.editId);
@@ -131,6 +137,7 @@ const PlayersController = (() => {
     });
 
     RatingsController.init(refreshRatings);
+    RatingViewController.init();
   };
 
   return { init, getAllPlayers: () => allPlayers, getRatingsMap: () => ratingsMap };

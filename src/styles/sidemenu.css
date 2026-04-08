@@ -37,6 +37,13 @@
 
 .sidemenu ul a:hover { color: var(--accent); }
 
+.sidemenu ul a.disabled {
+  color: var(--text-muted);
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
 .sidemenu__divider {
   border-top: 1px solid var(--border);
   margin: 8px 0;

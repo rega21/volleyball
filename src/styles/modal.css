@@ -230,3 +230,136 @@
   font-weight: 600;
   padding: 12px 0;
 }
+
+/* ── Modal rating view ───────────────────────────────── */
+.modal__content--ratingview {
+  padding: 0;
+  background: #1a1a2e;
+  color: #eee;
+  max-width: 380px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+.ratingview-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ratingview-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ratingview-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #eee;
+}
+
+.ratingview-score-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ratingview-score {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f1c40f;
+}
+
+.ratingview-trend {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ratingview-trend--up   { color: #10b981; }
+.ratingview-trend--down { color: #ef4444; }
+
+.modal__content--ratingview .modal__close {
+  font-size: 1.1rem;
+  background: transparent;
+  border: 0;
+  color: #eee;
+  top: 16px;
+  right: 16px;
+}
+
+.ratingview-body {
+  padding: 2px 20px 0;
+}
+
+.radar-container--view {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.radar-container--view canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ratingview-footer {
+  padding: 10px 16px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ratingview-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.ratingview-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #eee;
+}
+
+.ratingview-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.ratingview-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: background 0.2s;
+}
+
+.ratingview-dot--active {
+  background: rgba(255,255,255,0.7);
+}
+
+.modal__content--ratingview .rating-nav-inline {
+  font-size: 2rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  color: #eee;
+}
+
+/* Badge clickeable */
+.rating-badge--btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+}

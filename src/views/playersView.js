@@ -1,11 +1,10 @@
 const PlayersView = (() => {
   const list = document.getElementById('playerList');
 
-  const renderRating = (ratingData) => {
-    if (!ratingData) return '<span class="rating-badge">☆ Pendiente</span>';
-    if (!ratingData.avg) return '<span class="rating-badge">☆ Pendiente</span>';
-    const overall = +(Object.values(ratingData.avg).reduce((a, b) => a + b, 0) / RatingsService.STATS.length).toFixed(1);
-    return `<span class="rating-badge rating-badge--active">⭐ ${overall}</span>`;
+  const renderRating = (ratingData, playerId) => {
+    if (!ratingData?.avg) return '<span class="rating-badge">★ Pendiente</span>';
+    const overall = +(RatingsService.STATS.reduce((sum, s) => sum + ratingData.avg[s], 0) / RatingsService.STATS.length).toFixed(1);
+    return `<button class="rating-badge rating-badge--active rating-badge--btn" data-view-id="${playerId}">★ ${overall}</button>`;
   };
 
   const renderCard = (player, ratingData, myVote) => {
@@ -24,7 +23,7 @@ const PlayersView = (() => {
             ${player.nickname ? `<span class="player-card__nickname">"${player.nickname}"</span>` : ''}
           </div>
           <div class="player-card__meta">
-            ${renderRating(ratingData)}
+            ${renderRating(ratingData, player.id)}
           </div>
         </div>
         <div class="player-card__actions">

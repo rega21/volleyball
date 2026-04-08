@@ -1,7 +1,7 @@
 const RatingsService = (() => {
   const db = SupabaseClient.client;
   const STATS = ['remate', 'defensa', 'saque', 'recepcion', 'movilidad', 'tecnica'];
-  const MIN_VOTES = 4;
+  const MIN_VOTES = 1;
 
   // Obtiene o genera el voter_id anónimo
   const getVoterId = () => {

@@ -38,7 +38,7 @@
     <button class="sidemenu__close" id="menuClose">✕</button>
     <ul>
       <li><a href="#" id="menuAdmin">Admin</a></li>
-      <li><a href="#" id="menuRatingGlobal">Rating Global</a></li>
+      <li><a href="#" id="menuRatingGlobal">Calificación del grupo</a></li>
       <li><a href="#" id="menuTablaGeneral">Tabla General</a></li>
       <li class="sidemenu__divider"></li>
       <li><a href="#" id="feedbackLink">Sugerencias</a></li>
@@ -199,6 +199,35 @@
     </div>
   </div>
 
+  <!-- Modal rating view (read-only radar) -->
+  <div class="modal" id="ratingViewModal">
+    <div class="modal__content modal__content--ratingview">
+      <div class="ratingview-header">
+        <div class="ratingview-header-main">
+          <h2 class="ratingview-title">Calificación del grupo</h2>
+          <div class="ratingview-score-row">
+            <span class="ratingview-score" id="ratingViewScore"></span>
+            <span class="ratingview-trend" id="ratingViewTrend"></span>
+          </div>
+        </div>
+        <button class="modal__close" id="ratingViewClose">✕</button>
+      </div>
+      <div class="ratingview-body">
+        <div class="radar-container radar-container--view">
+          <canvas id="radarViewChart"></canvas>
+        </div>
+      </div>
+      <div class="ratingview-footer">
+        <button class="rating-nav-inline" id="ratingViewPrev">&#8249;</button>
+        <div class="ratingview-center">
+          <span class="ratingview-name" id="ratingViewName"></span>
+          <div class="ratingview-dots" id="ratingViewDots"></div>
+        </div>
+        <button class="rating-nav-inline" id="ratingViewNext">&#8250;</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal rating -->
   <div class="modal" id="ratingModal">
     <div class="modal__content modal__content--rating">
@@ -246,6 +275,7 @@
 
   <!-- Controladores -->
   <script src="src/controllers/ratingsController.js"></script>
+  <script src="src/controllers/ratingViewController.js"></script>
   <script src="src/controllers/playersController.js"></script>
   <script src="src/controllers/tabController.js"></script>
   <script src="src/controllers/menuController.js"></script>
