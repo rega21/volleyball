@@ -38,7 +38,7 @@
     <button class="sidemenu__close" id="menuClose">✕</button>
     <ul>
       <li><a href="#" id="menuAdmin">Admin</a></li>
-      <li><a href="#" id="menuRatingGlobal">Calificación del grupo</a></li>
+      <li><a href="#" id="menuRatingGlobal">Promedio general</a></li>
       <li><a href="#" id="menuTablaGeneral">Tabla General</a></li>
       <li class="sidemenu__divider"></li>
       <li><a href="#" id="feedbackLink">Sugerencias</a></li>
@@ -143,8 +143,9 @@
   <!-- Modal agregar jugador -->
   <div class="modal" id="addPlayerModal">
     <div class="modal__content">
+      <div class="rating-toast" id="playerToast">✓ Jugador guardado</div>
       <button class="modal__close" id="addPlayerClose">✕</button>
-      <h2>Agregar jugador</h2>
+      <h2 id="addPlayerTitle">Agregar jugador</h2>
       <div class="form-group">
         <label>Nombre *</label>
         <input type="text" id="playerName" placeholder="Nombre" />
@@ -204,7 +205,7 @@
     <div class="modal__content modal__content--ratingview">
       <div class="ratingview-header">
         <div class="ratingview-header-main">
-          <h2 class="ratingview-title">Calificación del grupo</h2>
+          <h2 class="ratingview-title">Promedio general</h2>
           <div class="ratingview-score-row">
             <span class="ratingview-score" id="ratingViewScore"></span>
             <span class="ratingview-trend" id="ratingViewTrend"></span>
@@ -231,6 +232,7 @@
   <!-- Modal rating -->
   <div class="modal" id="ratingModal">
     <div class="modal__content modal__content--rating">
+      <div class="rating-toast" id="ratingToast">✓ Calificación guardada</div>
       <button class="modal__close" id="ratingClose">✕</button>
 
       <div class="radar-container">

@@ -78,7 +78,9 @@ const PlayersController = (() => {
         }
         allPlayers = await PlayersService.getAll();
         PlayersView.render(allPlayers, ratingsMap, myVotedMap);
-        closeModal();
+        const toast = document.getElementById('playerToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
       } catch (err) {
         console.error('Error guardando jugador:', err);
       }

@@ -4,7 +4,10 @@ const PlayersView = (() => {
   const renderRating = (ratingData, playerId) => {
     if (!ratingData?.avg) return '<span class="rating-badge">★ Pendiente</span>';
     const overall = +(RatingsService.STATS.reduce((sum, s) => sum + ratingData.avg[s], 0) / RatingsService.STATS.length).toFixed(1);
-    return `<button class="rating-badge rating-badge--active rating-badge--btn" data-view-id="${playerId}">★ ${overall}</button>`;
+    const trend = overall >= 5
+      ? '<span class="rating-trend rating-trend--up">▲</span>'
+      : '<span class="rating-trend rating-trend--down">▼</span>';
+    return `<button class="rating-badge rating-badge--active rating-badge--btn" data-view-id="${playerId}">★ ${overall} ${trend}</button>`;
   };
 
   const renderCard = (player, ratingData, myVote) => {

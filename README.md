@@ -61,8 +61,14 @@ App web para gestionar jugadores, armar equipos y registrar partidos de vóley (
 - [x] Lista de jugadores con scroll interno (header fijo, lista scrolleable)
 - [x] Lista de jugadores en orden aleatorio en cada render
 - [x] Botón "Calificar" deshabilitado (gris) si todos los sliders están en 0
-- [x] Modal "Calificación del grupo": click en estrella ⭐ abre radar read-only con avg del jugador, navegación < > y swipe entre jugadores calificados, dots de paginación
-- [x] Menú hamburguesa → "Calificación del grupo" abre un jugador al azar (deshabilitado si no hay calificaciones)
+- [x] Label amber si un stat queda en 0 mientras otros ya fueron calificados (aviso sutil)
+- [x] Toast "✓ Calificación guardada" en rating modal tras guardar (modal permanece abierto)
+- [x] Toast "✓ Jugador guardado" en modal editar/agregar (modal permanece abierto para verificar)
+- [x] Click fuera del modal lo cierra (backdrop tap — comportamiento mobile estándar)
+- [x] Posiciones en una sola línea en modal editar (flex nowrap)
+- [x] Flecha de tendencia ▲▼ visible en playerList junto al rating
+- [x] Modal "Promedio general": click en estrella ⭐ abre radar read-only con avg del jugador, navegación < > y swipe entre jugadores calificados, dots de paginación
+- [x] Menú hamburguesa → "Promedio general" abre un jugador al azar (deshabilitado si no hay calificaciones)
 
 ### Supabase
 - [ ] View `player_avg_ratings` — promedio de stats con mínimo 4 votos

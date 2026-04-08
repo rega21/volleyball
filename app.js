@@ -49,6 +49,13 @@ if ('serviceWorker' in navigator) {
 
   TabController.switchTab('jugadores');
 
+  // Cerrar modales al hacer click fuera del contenido
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('open');
+    });
+  });
+
   // Feedback submit
   document.getElementById('feedbackSubmit').addEventListener('click', async () => {
     const text = document.getElementById('feedbackText').value.trim();

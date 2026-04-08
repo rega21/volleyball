@@ -170,7 +170,10 @@
   font-size: 0.82rem;
   color: var(--text-muted);
   flex-shrink: 0;
+  transition: color 0.2s;
 }
+
+.slider-label--zero { color: #d97706; }
 
 .slider {
   flex: 1;
@@ -230,6 +233,26 @@
 .rating-nav-inline:hover {
   color: var(--text);
 }
+
+.rating-toast {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #059669;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 10;
+}
+
+.rating-toast.show { opacity: 1; }
 
 .voted-msg {
   text-align: center;

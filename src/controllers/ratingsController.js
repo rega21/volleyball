@@ -95,7 +95,7 @@ const RatingsController = (() => {
       const val = existingVote ? existingVote[s] : 0;
       return `
         <div class="slider-row">
-          <span class="slider-label">${STAT_LABELS[s]}</span>
+          <span class="slider-label" data-stat="${s}">${STAT_LABELS[s]}</span>
           <input type="range" id="slider-${s}" min="0" max="10" value="${val}" class="slider" />
           <span class="slider-value" id="val-${s}">${val}</span>
         </div>
@@ -108,11 +108,21 @@ const RatingsController = (() => {
       document.getElementById('ratingSubmit').disabled = allZero;
     };
 
+    const checkZeroLabels = () => {
+      const vals = getStatValues();
+      const allZero = Object.values(vals).every(v => v === 0);
+      STATS.forEach(s => {
+        const label = document.querySelector(`.slider-label[data-stat="${s}"]`);
+        if (label) label.classList.toggle('slider-label--zero', !allZero && vals[s] === 0);
+      });
+    };
+
     STATS.forEach(s => {
       document.getElementById(`slider-${s}`).addEventListener('input', () => {
         document.getElementById(`val-${s}`).textContent = document.getElementById(`slider-${s}`).value;
         updateRadar(getStatValues());
         checkSubmitEnabled();
+        checkZeroLabels();
       });
     });
 
@@ -193,13 +203,11 @@ const RatingsController = (() => {
         await RatingsService.vote(currentPlayerId, vals);
         currentVotesMap[currentPlayerId] = vals;
         const name = playersList[currentIndex]?.nickname || playersList[currentIndex]?.name || '';
-        btn.textContent = '✓ Guardado';
-        btn.style.background = '#059669';
+        btn.textContent = `Actualizar · ${name}`;
         if (onVoteCallback) onVoteCallback();
-        setTimeout(() => {
-          btn.textContent = `Actualizar · ${name}`;
-          btn.style.background = '';
-        }, 1500);
+        const toast = document.getElementById('ratingToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
       } catch (err) {
         console.error('Error enviando voto:', err);
       }
