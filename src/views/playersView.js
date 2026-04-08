@@ -19,6 +19,10 @@ const PlayersView = (() => {
            CALIFICAR
          </button>`;
 
+    const deleteBtn = AdminController.isAuthenticated()
+      ? `<button class="btn-delete-player" data-id="${player.id}" aria-label="Borrar jugador">🗑️</button>`
+      : '';
+
     return `
       <div class="player-card" data-id="${player.id}">
         <div class="player-card__info" data-edit-id="${player.id}">
@@ -31,6 +35,7 @@ const PlayersView = (() => {
         </div>
         <div class="player-card__actions">
           ${actionBtn}
+          ${deleteBtn}
         </div>
       </div>
     `;

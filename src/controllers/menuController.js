@@ -30,6 +30,12 @@ const MenuController = (() => {
       document.getElementById('feedbackModal').classList.remove('open');
     });
 
+    document.getElementById('menuAdmin').addEventListener('click', (e) => {
+      e.preventDefault();
+      close();
+      AdminController.openPin();
+    });
+
     document.getElementById('menuRatingGlobal').addEventListener('click', (e) => {
       e.preventDefault();
       close();

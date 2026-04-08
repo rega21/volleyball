@@ -32,6 +32,7 @@ if ('serviceWorker' in navigator) {
 (() => {
   ThemeController.init();
   MenuController.init();
+  AdminController.init();
   TabController.init();
   PlayersController.init(PartidoController);
   lucide.createIcons();

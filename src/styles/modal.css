@@ -384,6 +384,154 @@
   color: #eee;
 }
 
+/* ── Modal PIN ───────────────────────────────────────── */
+.modal__content--pin {
+  max-width: 300px;
+  text-align: center;
+}
+
+.pin-hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.pin-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.4rem;
+  letter-spacing: 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.pin-input:focus { border-color: var(--accent); }
+
+.pin-error {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  display: none;
+}
+
+/* ── Modal Admin Panel ───────────────────────────────── */
+.modal__content--admin {
+  max-height: 85dvh;
+  overflow-y: auto;
+}
+
+.admin-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.admin-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s;
+}
+
+.admin-option:hover:not(:disabled) { border-color: var(--accent); }
+
+.admin-option:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.admin-option--link { color: var(--accent); }
+
+.admin-back {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+.admin-back:hover { color: var(--text); }
+
+.admin-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.admin-loading, .admin-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.admin-feedback-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-feedback-item:last-child { border-bottom: none; }
+
+.admin-feedback-msg {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.admin-feedback-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.admin-delete-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-delete-item:last-child { border-bottom: none; }
+
+.admin-delete-name {
+  font-size: 0.9rem;
+}
+
+.admin-delete-nick {
+  color: var(--text-muted);
+  font-style: normal;
+  margin-left: 6px;
+}
+
+.admin-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.admin-delete-btn:hover { background: rgba(239,68,68,0.1); }
+
 /* Badge clickeable */
 .rating-badge--btn {
   background: none;

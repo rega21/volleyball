@@ -1,4 +1,4 @@
-const CACHE = 'voley-clt-v32';
+const CACHE = 'voley-clt-v33';
 const ASSETS = [
   '/',
   '/index.html',
@@ -19,6 +19,7 @@ const ASSETS = [
   '/src/services/matches.js',
   '/src/styles/historial.css',
   '/src/controllers/historialController.js',
+  '/src/controllers/adminController.js',
   '/src/views/playersView.js',
   '/src/controllers/playersController.js',
   '/src/controllers/ratingsController.js',

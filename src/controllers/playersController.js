@@ -119,7 +119,23 @@ const PlayersController = (() => {
     initModal();
 
     // Delegación para VOTAR y EDITAR voto
-    document.getElementById('playerList').addEventListener('click', (e) => {
+    document.getElementById('playerList').addEventListener('click', async (e) => {
+      // Borrar jugador (admin)
+      const delBtn = e.target.closest('.btn-delete-player');
+      if (delBtn) {
+        const player = allPlayers.find(p => p.id === delBtn.dataset.id);
+        if (!player) return;
+        if (!confirm(`¿Borrar a ${player.name}?`)) return;
+        try {
+          await PlayersService.softDelete(delBtn.dataset.id);
+          allPlayers = allPlayers.filter(p => p.id !== delBtn.dataset.id);
+          PlayersView.render(allPlayers, ratingsMap, myVotedMap);
+        } catch (err) {
+          console.error('Error borrando jugador:', err);
+        }
+        return;
+      }
+
       // Badge rating → abre modal de visualización (si tiene avg)
       const badge = e.target.closest('.rating-badge--btn');
       if (badge) {
@@ -142,5 +158,7 @@ const PlayersController = (() => {
     RatingViewController.init();
   };
 
-  return { init, getAllPlayers: () => allPlayers, getRatingsMap: () => ratingsMap };
+  const refreshView = () => PlayersView.render(allPlayers, ratingsMap, myVotedMap);
+
+  return { init, getAllPlayers: () => allPlayers, getRatingsMap: () => ratingsMap, refreshView };
 })();

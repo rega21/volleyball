@@ -71,5 +71,13 @@ const PlayersService = (() => {
     return data;
   };
 
-  return { getAll, getById, create, update, getPositions };
+  const softDelete = async (id) => {
+    const { error } = await db
+      .from('players')
+      .update({ deleted_at: new Date().toISOString() })
+      .eq('id', id);
+    if (error) throw error;
+  };
+
+  return { getAll, getById, create, update, getPositions, softDelete };
 })();

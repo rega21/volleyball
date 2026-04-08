@@ -38,8 +38,9 @@
     <button class="sidemenu__close" id="menuClose">✕</button>
     <ul>
       <li><a href="#" id="menuAdmin">Admin</a></li>
+      <li id="menuFeedbackItem" style="display:none"><a href="#" id="menuFeedbackAdmin">Ver sugerencias</a></li>
       <li><a href="#" id="menuRatingGlobal">Promedio general</a></li>
-      <li><a href="#" id="menuTablaGeneral">Tabla General</a></li>
+      <li><a href="#" id="menuTablaGeneral" class="disabled">Tabla General <span class="menu-badge">Próximamente</span></a></li>
       <li class="sidemenu__divider"></li>
       <li><a href="#" id="feedbackLink">Sugerencias</a></li>
       <li><a href="#" id="menuInfoApp">Info App</a></li>
@@ -139,6 +140,27 @@
 
   </div><!-- /#app-shell -->
   </div><!-- /#page -->
+
+  <!-- Modal PIN Admin -->
+  <div class="modal" id="adminPinModal">
+    <div class="modal__content modal__content--pin">
+      <button class="modal__close" id="adminPinClose">✕</button>
+      <h2>Admin</h2>
+      <p class="pin-hint">Ingresá el PIN de acceso</p>
+      <input type="password" id="adminPinInput" placeholder="••••" maxlength="6" class="pin-input" inputmode="numeric" />
+      <p class="pin-error" id="adminPinError">PIN incorrecto</p>
+      <button class="btn btn--primary" id="adminPinSubmit">Ingresar</button>
+    </div>
+  </div>
+
+  <!-- Modal Ver sugerencias (admin) -->
+  <div class="modal" id="adminFeedbackModal">
+    <div class="modal__content modal__content--admin">
+      <button class="modal__close" id="adminFeedbackClose">✕</button>
+      <h2>Sugerencias</h2>
+      <div id="adminFeedbackItems"></div>
+    </div>
+  </div>
 
   <!-- Modal agregar jugador -->
   <div class="modal" id="addPlayerModal">
@@ -284,6 +306,7 @@
   <script src="src/controllers/themeController.js"></script>
   <script src="src/controllers/partidoController.js"></script>
   <script src="src/controllers/historialController.js"></script>
+  <script src="src/controllers/adminController.js"></script>
 
   <!-- App principal -->
   <script src="app.js"></script>

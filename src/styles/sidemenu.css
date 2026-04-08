@@ -44,6 +44,18 @@
   cursor: default;
 }
 
+.menu-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 7px;
+  margin-left: 6px;
+  opacity: 1;
+  vertical-align: middle;
+}
+
 .sidemenu__divider {
   border-top: 1px solid var(--border);
   margin: 8px 0;

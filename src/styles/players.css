@@ -188,6 +188,21 @@
   border: 1px solid var(--border);
 }
 
+/* ── Botón borrar (admin) ───────────────────────────── */
+.btn-delete-player {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.btn-delete-player:hover { background: rgba(239,68,68,0.12); }
+
 /* ── Formulario jugador ─────────────────────────────── */
 .form-group {
   display: flex;
